@@ -1,0 +1,64 @@
+# =============================================================================
+# Exyconn Auth Multi Tenant - Docker Compose
+# UI: Port 4001 | Server: Port 4002
+# Domains: auth.exyconn.com | exyconn-auth-server.exyconn.com
+# =============================================================================
+
+services:
+  # ============================================================================
+  # AUTH UI (auth.exyconn.com) - Port 4001
+  # ============================================================================
+  auth-ui:
+    container_name: exyconn-auth-ui
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:4002/v1/api}
+    restart: unless-stopped
+    ports:
+      - "4001:80"
+    depends_on:
+      auth-server:
+        condition: service_healthy
+    networks:
+      - auth-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ============================================================================
+  # AUTH SERVER (exyconn-auth-server.exyconn.com) - Port 4002
+  # ============================================================================
+  auth-server:
+    container_name: exyconn-auth-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4002:4002"
+    env_file:
+      - ./server/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=4002
+    networks:
+      - auth-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:4002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  auth-network:
+    driver: bridge
+    name: exyconn-auth-network

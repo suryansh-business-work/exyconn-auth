@@ -1,0 +1,195 @@
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+Running 3 tests using 1 worker
+
+[1A[2K[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  override existing env vars with { override: true }
+
+[1A[2K[1/3] [api] › tests\api\org-resolution.api.spec.ts:6:3 › Organization Resolution API @api › should resolve API key by domain
+[1A[2K[api] › tests\api\org-resolution.api.spec.ts:6:3 › Organization Resolution API @api › should resolve API key by domain
+DEBUG: apikey-by-domain Response Body: {
+  "message": "API Key fetched successfully",
+  "data": {
+    "apiKey": "exy_Bis0aIuvukA6vP8A8ZXhuxakqUdmr2GY",
+    "orgName": "Exyconn",
+    "matched": true
+  },
+  "status": "success",
+  "statusCode": 200
+}
+
+[1A[2K[2/3] [api] › tests\api\org-resolution.api.spec.ts:21:3 › Organization Resolution API @api › should fetch organization details by API key
+[1A[2K[api] › tests\api\org-resolution.api.spec.ts:21:3 › Organization Resolution API @api › should fetch organization details by API key
+DEBUG: apikey-to-organization Response Body: {
+  "message": "Organization details retrieved successfully",
+  "data": {
+    "orgId": "6968b2feabcd8ba3af1a72a8",
+    "_id": "6968b2feabcd8ba3af1a72a8",
+    "orgName": "Spentiva",
+    "orgEmail": "services@spentiva.com",
+    "orgWebsite": "https://spentiva.com",
+    "orgSlug": "spentiva",
+    "orgLogos": [
+      {
+        "size": "64x64",
+        "url": "https://ik.imagekit.io/esdata1/suryansh/Spentiva_jQ9-dnRTX.png",
+        "isDefault": false
+      },
+      {
+        "size": "128x128",
+        "url": "https://ik.imagekit.io/esdata1/suryansh/128x128_qpsi-0Oys.png",
+        "isDefault": true
+      },
+      {
+        "size": "256x256",
+        "url": "https://ik.imagekit.io/esdata1/suryansh/256x256_d1yPFO-pP.png",
+        "isDefault": false
+      },
+      {
+        "size": "512x512",
+        "url": "https://ik.imagekit.io/esdata1/suryansh/512x512_uFDztNR4I.png",
+        "isDefault": false
+      }
+    ],
+    "orgFavIcon": "https://ik.imagekit.io/esdata1/suryansh/favicon_7ZS2OujWmx.png",
+    "loginBgImages": [
+      {
+        "url": "https://ik.imagekit.io/esdata1/suryansh/pexels-karola-g-5900132_63tykS9bD.jpg",
+        "name": "pexels-karola-g-5900132_63tykS9bD.jpg"
+      }
+    ],
+    "loginPageDesign": "split",
+    "customTextSections": [
+      {
+        "name": "Title",
+        "slug": "title",
+        "text": "Welcome to Our Platform",
+        "type": "heading",
+        "variant": "h1"
+      },
+      {
+        "name": "Description",
+        "slug": "description",
+        "text": "Sign in to access your account and explore our services",
+        "type": "paragraph",
+        "variant": "body1"
+      },
+      {
+        "name": "Slogan",
+        "slug": "slogan",
+        "text": "Your Journey Starts Here",
+        "type": "heading",
+        "variant": "h3"
+      }
+    ],
+    "orgTheme": {
+      "primaryColor": "#1976d2",
+      "secondaryColor": "#dc004e",
+      "tertiaryColor": "#ff9800",
+      "customColors": []
+    },
+    "oauthSettings": {
+      "google": {
+        "enabled": false,
+        "clientId": "",
+        "clientSecret": "",
+        "authorizedJavaScriptOrigins": [],
+        "authorizedRedirectUris": []
+      },
+      "microsoft": {
+        "enabled": false,
+        "clientId": "",
+        "clientSecret": "",
+        "authorizedJavaScriptOrigins": [],
+        "authorizedRedirectUris": []
+      },
+      "apple": {
+        "enabled": false,
+        "clientId": "",
+        "clientSecret": "",
+        "authorizedJavaScriptOrigins": [],
+        "authorizedRedirectUris": []
+      },
+      "github": {
+        "enabled": false,
+        "clientId": "",
+        "clientSecret": "",
+        "authorizedJavaScriptOrigins": [],
+        "authorizedRedirectUris": []
+      }
+    },
+    "featureFlags": {
+      "googleLogin": false,
+      "emailVerification": true,
+      "passwordReset": true,
+      "mfaRequired": false
+    },
+    "mailSettings": {
+      "emailVerification": true,
+      "otpMail": true,
+      "passwordReset": false,
+      "loginAlert": true,
+      "twoFactorAuth": true,
+      "emailChangeConfirmation": true,
+      "accountRecovery": true
+    },
+    "orgRedirectionSettings": [
+      {
+        "authPagePath": "http://localhost:9001",
+        "redirectionUrl": "http://localhost:9001",
+        "env": "Local Dev",
+        "description": "Local development environment redirection for testing authentication flow"
+      },
+      {
+        "authPagePath": "https://auth.spentiva.com",
+        "redirectionUrl": "https://app.spentiva.com",
+        "env": "Production",
+        "description": "Auth server default - redirects to profile page after login"
+      }
+    ],
+    "orgPoliciesLink": [
+      {
+        "policyName": "dataPolicy",
+        "policyLink": "https://spentiva.com/data-policy"
+      },
+      {
+        "policyName": "cookiePolicy",
+        "policyLink": "https://spentiva.com/cookie-policy"
+      },
+      {
+        "policyName": "privacyPolicy",
+        "policyLink": "https://spentiva.com/privacy-policy"
+      },
+      {
+        "policyName": "termsAndConditions",
+        "policyLink": "https://spentiva.com/terms-and-conditions"
+      }
+    ],
+    "passwordPolicy": {
+      "minLength": 8,
+      "requireUppercase": true,
+      "requireLowercase": true,
+      "requireNumbers": true,
+      "requireSpecialChars": false,
+      "expiryDays": 90
+    },
+    "customCss": "",
+    "customHtml": "",
+    "customJs": "",
+    "issues": {
+      "critical": [
+        {
+          "id": "smtp",
+          "name": "SMTP Settings",
+          "description": "Email server not configured"
+        }
+      ],
+      "warning": [],
+      "info": []
+    }
+  },
+  "status": "success",
+  "statusCode": 200
+}
+
+[1A[2K[3/3] [api] › tests\api\org-resolution.api.spec.ts:34:3 › Organization Resolution API @api › should return 401 for invalid API key on apikey-to-organization
+[1A[2K  3 passed (1.9s)

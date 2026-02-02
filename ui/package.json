@@ -1,0 +1,63 @@
+{
+  "name": "auth-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,scss,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,scss,json}\""
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@exyconn/common": "^2.3.6",
+    "@monaco-editor/react": "^4.7.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/lab": "^6.0.0-beta.26",
+    "@mui/material": "^6.4.0",
+    "@xyflow/react": "^12.10.0",
+    "axios": "^1.13.4",
+    "chart.js": "^4.5.1",
+    "css-validator": "^0.11.0",
+    "dotenv": "^17.2.3",
+    "formik": "^2.4.9",
+    "react": "^19.2.4",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.0",
+    "react-scan": "^0.4.3",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1",
+    "swagger-ui-react": "^5.31.0",
+    "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@playwright/test": "^1.58.1",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-slick": "^0.23.13",
+    "@types/swagger-ui-react": "^5.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "@vitejs/plugin-react": "^5.1.2",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.0",
+    "prettier": "^3.8.1",
+    "sass": "^1.97.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.32.0",
+    "vite": "^7.3.1"
+  }
+}

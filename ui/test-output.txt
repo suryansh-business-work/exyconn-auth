@@ -1,0 +1,26 @@
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+
+Running 1 test using 1 worker
+
+[1A[2K[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+
+[1A[2K[1/1] [api] › tests\api\org-resolution.api.spec.ts:8:3 › Organization Resolution API @api › should resolve API key by domain
+[1A[2K  1) [api] › tests\api\org-resolution.api.spec.ts:8:3 › Organization Resolution API @api › should resolve API key by domain 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mundefined[39m
+
+      16 |     // We expect success even if not found (it returns matched: false)
+      17 |     expect(response.status()).toBe(200);
+    > 18 |     expect(body.success).toBe(true);
+         |                          ^
+      19 |
+      20 |     if (body.data.matched) {
+      21 |       expect(body.data.apiKey).toBeDefined();
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\org-resolution.api.spec.ts:18:26
+
+
+[1A[2K  1 failed
+    [api] › tests\api\org-resolution.api.spec.ts:8:3 › Organization Resolution API @api › should resolve API key by domain 

@@ -1,0 +1,340 @@
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+
+Running 34 tests using 13 workers
+
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+  ✘   2 [security] › tests\security\auth-security.spec.ts:5:5 › Security: Rate Limiting › Login Rate Limiting › should allow requests within rate limit (30ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  override existing env vars with { override: true }
+  ✘  10 [api] › tests\api\signup.api.spec.ts:7:5 › Signup API › Valid Signup › should create new user with valid data (31ms)
+  ✓  12 [api] › tests\api\login.api.spec.ts:5:5 › Login API › Valid Login › should login with valid credentials (38ms)
+  ✓  14 [api] › tests\api\login.api.spec.ts:20:5 › Login API › Valid Login › should return token on successful login (10ms)
+  ✘  15 [api] › tests\api\login.api.spec.ts:38:5 › Login API › Invalid Login › should reject empty email (8ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  suppress all logs with { quiet: true }
+  ✓  16 [security] › tests\security\auth-security.spec.ts:21:5 › Security: Rate Limiting › Login Rate Limiting › should return 429 when rate limited @slow (100ms)
+  ✘  17 [security] › tests\security\auth-security.spec.ts:44:3 › Security: Token Validation › should reject expired token @security (9ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+  ✘  18 [api] › tests\api\signup.api.spec.ts:25:5 › Signup API › Validation Errors › should reject invalid email format (52ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+  ✘  19 [api] › tests\api\login.api.spec.ts:49:5 › Login API › Invalid Login › should reject empty password (44ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+  ✘  20 [security] › tests\security\auth-security.spec.ts:56:3 › Security: Token Validation › should reject malformed token @security (50ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+  ✘  21 [api] › tests\api\signup.api.spec.ts:38:5 › Signup API › Validation Errors › should reject short password (51ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+  ✘  22 [api] › tests\api\login.api.spec.ts:60:5 › Login API › Invalid Login › should reject invalid email format (49ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+  ✘  23 [security] › tests\security\auth-security.spec.ts:65:3 › Security: Token Validation › should reject missing token @security (38ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+  ✘  24 [api] › tests\api\signup.api.spec.ts:51:5 › Signup API › Validation Errors › should reject missing firstName (33ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  suppress all logs with { quiet: true }
+  ✘  25 [api] › tests\api\login.api.spec.ts:71:5 › Login API › Invalid Login › should reject wrong password (40ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  suppress all logs with { quiet: true }
+  ✓  26 [security] › tests\security\auth-security.spec.ts:72:3 › Security: Token Validation › should reject empty Authorization header @security (31ms)
+  ✓  27 [security] › tests\security\auth-security.spec.ts:83:3 › Security: API Key Validation › should reject invalid API key @security (7ms)
+  ✓  28 [security] › tests\security\auth-security.spec.ts:104:3 › Security: API Key Validation › should reject missing API key @security (8ms)
+  ✓  29 [security] › tests\security\auth-security.spec.ts:123:3 › Security: OTP › should reject invalid OTP format @security (7ms)
+  ✓  30 [security] › tests\security\auth-security.spec.ts:135:3 › Security: OTP › should reject expired OTP @security (6ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+  ✘  31 [api] › tests\api\signup.api.spec.ts:64:5 › Signup API › Validation Errors › should reject missing lastName (35ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+  ✘  32 [api] › tests\api\login.api.spec.ts:87:5 › Login API › Missing API Key › should reject request without API key (27ms)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+  ✘  33 [api] › tests\api\signup.api.spec.ts:77:5 › Signup API › Validation Errors › should reject empty request body (52ms)
+  ✓   8 [firefox] › tests\e2e\login-flow.spec.ts:24:3 › Login Flow E2E › should show validation error for empty email (6.0s)
+  ✓   3 [chromium] › tests\e2e\login-flow.spec.ts:24:3 › Login Flow E2E › should show validation error for empty email (5.7s)
+  ✓   1 [chromium] › tests\e2e\login-flow.spec.ts:9:3 › Login Flow E2E › should display login page elements (5.8s)
+  ✓   6 [chromium] › tests\e2e\login-flow.spec.ts:61:3 › Login Flow E2E › should have forgot password link (5.8s)
+  ✓   5 [chromium] › tests\e2e\login-flow.spec.ts:46:3 › Login Flow E2E › should navigate between login and signup (5.9s)
+  ✓   7 [chromium] › tests\e2e\login-flow.spec.ts:77:3 › Profile Flow E2E › should redirect unauthenticated user from profile (6.0s)
+  ✓  13 [firefox] › tests\e2e\login-flow.spec.ts:77:3 › Profile Flow E2E › should redirect unauthenticated user from profile (7.1s)
+[dotenv@17.2.3] injecting env (9) from .env.test -- tip: ⚙️  write to custom object with { processEnv: myObject }
+  ✘  34 [api] › tests\api\signup.api.spec.ts:87:5 › Signup API › Duplicate Email › should reject duplicate email in same organization (33ms)
+  ✓  11 [firefox] › tests\e2e\login-flow.spec.ts:61:3 › Login Flow E2E › should have forgot password link (6.6s)
+  ✓   9 [firefox] › tests\e2e\login-flow.spec.ts:46:3 › Login Flow E2E › should navigate between login and signup (6.4s)
+  ✓   4 [firefox] › tests\e2e\login-flow.spec.ts:9:3 › Login Flow E2E › should display login page elements (16.0s)
+
+
+  1) [api] › tests\api\login.api.spec.ts:38:5 › Login API › Invalid Login › should reject empty email 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      44 |       });
+      45 |
+    > 46 |       expect(response.status()).toBe(400);
+         |                                 ^
+      47 |     });
+      48 |
+      49 |     test('should reject empty password', async ({ apiContext, config }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\login.api.spec.ts:46:33
+
+  2) [api] › tests\api\login.api.spec.ts:49:5 › Login API › Invalid Login › should reject empty password 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      55 |       });
+      56 |
+    > 57 |       expect(response.status()).toBe(400);
+         |                                 ^
+      58 |     });
+      59 |
+      60 |     test('should reject invalid email format', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\login.api.spec.ts:57:33
+
+  3) [api] › tests\api\login.api.spec.ts:60:5 › Login API › Invalid Login › should reject invalid email format 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      66 |       });
+      67 |
+    > 68 |       expect(response.status()).toBe(400);
+         |                                 ^
+      69 |     });
+      70 |
+      71 |     test('should reject wrong password', async ({ apiContext, config }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\login.api.spec.ts:68:33
+
+  4) [api] › tests\api\login.api.spec.ts:71:5 › Login API › Invalid Login › should reject wrong password 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected value: [32m429[39m
+    Received array: [31m[400, 401][39m
+
+      80 |
+      81 |       // Should be 400 or 401, not 500
+    > 82 |       expect([400, 401]).toContain(response.status());
+         |                          ^
+      83 |     });
+      84 |   });
+      85 |
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\login.api.spec.ts:82:26
+
+  5) [api] › tests\api\login.api.spec.ts:87:5 › Login API › Missing API Key › should reject request without API key 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m401[39m
+    Received: [31m429[39m
+
+       97 |       });
+       98 |
+    >  99 |       expect(response.status()).toBe(401);
+          |                                 ^
+      100 |       await context.dispose();
+      101 |     });
+      102 |   });
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\login.api.spec.ts:99:33
+
+  6) [api] › tests\api\signup.api.spec.ts:7:5 › Signup API › Valid Signup › should create new user with valid data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected value: [32m429[39m
+    Received array: [31m[200, 400][39m
+
+      18 |
+      19 |       // Should be 200 or 400 if email already exists
+    > 20 |       expect([200, 400]).toContain(response.status());
+         |                          ^
+      21 |     });
+      22 |   });
+      23 |
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:20:26
+
+  7) [api] › tests\api\signup.api.spec.ts:25:5 › Signup API › Validation Errors › should reject invalid email format 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      33 |       });
+      34 |
+    > 35 |       expect(response.status()).toBe(400);
+         |                                 ^
+      36 |     });
+      37 |
+      38 |     test('should reject short password', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:35:33
+
+  8) [api] › tests\api\signup.api.spec.ts:38:5 › Signup API › Validation Errors › should reject short password 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      46 |       });
+      47 |
+    > 48 |       expect(response.status()).toBe(400);
+         |                                 ^
+      49 |     });
+      50 |
+      51 |     test('should reject missing firstName', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:48:33
+
+  9) [api] › tests\api\signup.api.spec.ts:51:5 › Signup API › Validation Errors › should reject missing firstName 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      59 |       });
+      60 |
+    > 61 |       expect(response.status()).toBe(400);
+         |                                 ^
+      62 |     });
+      63 |
+      64 |     test('should reject missing lastName', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:61:33
+
+  10) [api] › tests\api\signup.api.spec.ts:64:5 › Signup API › Validation Errors › should reject missing lastName 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      72 |       });
+      73 |
+    > 74 |       expect(response.status()).toBe(400);
+         |                                 ^
+      75 |     });
+      76 |
+      77 |     test('should reject empty request body', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:74:33
+
+  11) [api] › tests\api\signup.api.spec.ts:77:5 › Signup API › Validation Errors › should reject empty request body 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      80 |       });
+      81 |
+    > 82 |       expect(response.status()).toBe(400);
+         |                                 ^
+      83 |     });
+      84 |   });
+      85 |
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:82:33
+
+  12) [api] › tests\api\signup.api.spec.ts:87:5 › Signup API › Duplicate Email › should reject duplicate email in same organization 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m429[39m
+
+      110 |
+      111 |       // Should be 400 for duplicate
+    > 112 |       expect(response.status()).toBe(400);
+          |                                 ^
+      113 |       const data = await response.json();
+      114 |       expect(data.message || data.error).toContain('already exists');
+      115 |     });
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\api\signup.api.spec.ts:112:33
+
+  13) [security] › tests\security\auth-security.spec.ts:5:5 › Security: Rate Limiting › Login Rate Limiting › should allow requests within rate limit 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: not [32m429[39m
+
+      15 |         });
+      16 |         // Should get 400/401 not 429
+    > 17 |         expect(response.status()).not.toBe(429);
+         |                                       ^
+      18 |       }
+      19 |     });
+      20 |
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\security\auth-security.spec.ts:17:39
+
+  14) [security] › tests\security\auth-security.spec.ts:44:3 › Security: Token Validation › should reject expired token @security 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected value: [32m429[39m
+    Received array: [31m[401, 403][39m
+
+      51 |
+      52 |     // Should reject with 401/403
+    > 53 |     expect([401, 403]).toContain(response.status());
+         |                        ^
+      54 |   });
+      55 |
+      56 |   test('should reject malformed token @security', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\security\auth-security.spec.ts:53:24
+
+  15) [security] › tests\security\auth-security.spec.ts:56:3 › Security: Token Validation › should reject malformed token @security 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected value: [32m429[39m
+    Received array: [31m[401, 403][39m
+
+      60 |
+      61 |     // Should reject with 401/403
+    > 62 |     expect([401, 403]).toContain(response.status());
+         |                        ^
+      63 |   });
+      64 |
+      65 |   test('should reject missing token @security', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\security\auth-security.spec.ts:62:24
+
+  16) [security] › tests\security\auth-security.spec.ts:65:3 › Security: Token Validation › should reject missing token @security 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m401[39m
+    Received: [31m429[39m
+
+      67 |
+      68 |     // Without token, should get 401
+    > 69 |     expect(response.status()).toBe(401);
+         |                               ^
+      70 |   });
+      71 |
+      72 |   test('should reject empty Authorization header @security', async ({ apiContext }) => {
+        at C:\Users\Suryansh\Desktop\Projects\exyconn.com\auth\ui\tests\security\auth-security.spec.ts:69:31
+
+  16 failed
+    [api] › tests\api\login.api.spec.ts:38:5 › Login API › Invalid Login › should reject empty email 
+    [api] › tests\api\login.api.spec.ts:49:5 › Login API › Invalid Login › should reject empty password 
+    [api] › tests\api\login.api.spec.ts:60:5 › Login API › Invalid Login › should reject invalid email format 
+    [api] › tests\api\login.api.spec.ts:71:5 › Login API › Invalid Login › should reject wrong password 
+    [api] › tests\api\login.api.spec.ts:87:5 › Login API › Missing API Key › should reject request without API key 
+    [api] › tests\api\signup.api.spec.ts:7:5 › Signup API › Valid Signup › should create new user with valid data 
+    [api] › tests\api\signup.api.spec.ts:25:5 › Signup API › Validation Errors › should reject invalid email format 
+    [api] › tests\api\signup.api.spec.ts:38:5 › Signup API › Validation Errors › should reject short password 
+    [api] › tests\api\signup.api.spec.ts:51:5 › Signup API › Validation Errors › should reject missing firstName 
+    [api] › tests\api\signup.api.spec.ts:64:5 › Signup API › Validation Errors › should reject missing lastName 
+    [api] › tests\api\signup.api.spec.ts:77:5 › Signup API › Validation Errors › should reject empty request body 
+    [api] › tests\api\signup.api.spec.ts:87:5 › Signup API › Duplicate Email › should reject duplicate email in same organization 
+    [security] › tests\security\auth-security.spec.ts:5:5 › Security: Rate Limiting › Login Rate Limiting › should allow requests within rate limit 
+    [security] › tests\security\auth-security.spec.ts:44:3 › Security: Token Validation › should reject expired token @security 
+    [security] › tests\security\auth-security.spec.ts:56:3 › Security: Token Validation › should reject malformed token @security 
+    [security] › tests\security\auth-security.spec.ts:65:3 › Security: Token Validation › should reject missing token @security 
+  18 passed (20.0s)

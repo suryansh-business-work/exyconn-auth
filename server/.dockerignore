@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+coverage
+
+# Development files
+*.log
+logs
+.env
+.env.local
+.env*.local
+.nvmrc
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Testing
+coverage
+*.test.*
+*.spec.*
+__tests__
+jest.config.js
+
+# Misc
+README.md
+.DS_Store
+Thumbs.db
