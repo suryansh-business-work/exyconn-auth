@@ -36,9 +36,7 @@ const InfoRow = ({
   value: string | React.ReactNode;
 }) => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 2, py: 1.5 }}>
-    <Box
-      sx={{ color: "primary.main", display: "flex", alignItems: "center" }}
-    >
+    <Box sx={{ color: "primary.main", display: "flex", alignItems: "center" }}>
       {icon}
     </Box>
     <Box sx={{ flex: 1 }}>
