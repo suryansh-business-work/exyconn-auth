@@ -373,7 +373,9 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
       const state = req.query.state as string;
       const parsed = JSON.parse(state || "{}");
       origin = parsed.origin || "";
-    } catch (e) {}
+    } catch (e) {
+      // ignored
+    }
 
     const errorMessage =
       error.response?.data?.error ||
@@ -947,7 +949,9 @@ export const handleGitHubCallback = async (req: Request, res: Response) => {
       const state = req.query.state as string;
       const parsed = JSON.parse(state || "{}");
       origin = parsed.origin || "";
-    } catch (e) {}
+    } catch (e) {
+      // ignored
+    }
 
     const errorMessage =
       error.response?.data?.error ||
@@ -1245,7 +1249,9 @@ export const handleMicrosoftCallback = async (req: Request, res: Response) => {
       const state = req.query.state as string;
       const parsed = JSON.parse(state || "{}");
       origin = parsed.origin || "";
-    } catch (e) {}
+    } catch (e) {
+      // ignored
+    }
 
     const errorMessage =
       error.response?.data?.error_description ||
@@ -1540,7 +1546,9 @@ export const handleAppleCallback = async (req: Request, res: Response) => {
       const state = (req.body?.state || req.query.state) as string;
       const parsed = JSON.parse(state || "{}");
       origin = parsed.origin || "";
-    } catch (e) {}
+    } catch (e) {
+      // ignored
+    }
 
     const errorMessage = error.message || "Apple OAuth authentication failed";
     const errorRedirect = origin

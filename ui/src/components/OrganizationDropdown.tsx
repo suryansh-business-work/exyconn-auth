@@ -19,62 +19,57 @@ export interface OrganizationDropdownRef {
 
 const OrganizationDropdown = forwardRef<OrganizationDropdownRef>((_, ref) => {
   const { organizations, loading, error: fetchError } = useOrganizations();
-  const [selectedOrgId, setSelectedOrgId] = useState<string>("");
+  const [selectedOrgId, setSelectedOrgId] = useState<string>(() => {
+    return localStorageUtils.getString(STORAGE_KEYS.ORG_ID) || "";
+  });
   const [error, setError] = useState<string>("");
   const [autoSelected, setAutoSelected] = useState(false);
 
-  useEffect(() => {
-    // Load stored org ID
-    const storedOrgId = localStorageUtils.getString(STORAGE_KEYS.ORG_ID);
-    if (storedOrgId) {
-      setSelectedOrgId(storedOrgId);
+  // Derive display error from local error state and fetch error
+  const displayError = error || fetchError || "";
+
+  // Auto-select organization based on current URL (render-time state adjustment)
+  if (organizations.length > 0 && !selectedOrgId && !autoSelected) {
+    const currentUrl = window.location.origin; // e.g., https://auth.exyconn.com
+
+    // Try to find organization with matching authServerUrl
+    const matchingOrg = organizations.find((org) => {
+      if (!org.authServerUrl) return false;
+
+      try {
+        // Normalize URLs for comparison
+        const orgUrl = new URL(org.authServerUrl);
+        const currentOrigin = new URL(currentUrl);
+
+        // Compare hostname (domain)
+        return orgUrl.hostname === currentOrigin.hostname;
+      } catch {
+        return false;
+      }
+    });
+
+    if (matchingOrg) {
+      setSelectedOrgId(matchingOrg._id);
+      setAutoSelected(true);
     }
-  }, []);
+  }
 
-  // Set error from fetch
+  // Side effects for auto-selection (localStorage, logging)
   useEffect(() => {
-    if (fetchError) {
-      setError(fetchError);
-    }
-  }, [fetchError]);
-
-  // Auto-select organization based on current URL
-  useEffect(() => {
-    if (organizations.length > 0 && !selectedOrgId && !autoSelected) {
-      const currentUrl = window.location.origin; // e.g., https://auth.exyconn.com
-
-      // Try to find organization with matching authServerUrl
-      const matchingOrg = organizations.find((org) => {
-        if (!org.authServerUrl) return false;
-
-        try {
-          // Normalize URLs for comparison
-          const orgUrl = new URL(org.authServerUrl);
-          const currentOrigin = new URL(currentUrl);
-
-          // Compare hostname (domain)
-          return orgUrl.hostname === currentOrigin.hostname;
-        } catch {
-          return false;
-        }
-      });
-
-      if (matchingOrg) {
-        setSelectedOrgId(matchingOrg._id);
-        localStorageUtils.setString(STORAGE_KEYS.ORG_ID, matchingOrg._id);
-
-        // Store API key in localStorage
-        if (matchingOrg.apiKey) {
-          localStorage.setItem("apiKey", matchingOrg.apiKey);
+    if (autoSelected && selectedOrgId) {
+      const selectedOrg = organizations.find((o) => o._id === selectedOrgId);
+      if (selectedOrg) {
+        localStorageUtils.setString(STORAGE_KEYS.ORG_ID, selectedOrg._id);
+        if (selectedOrg.apiKey) {
+          localStorage.setItem("apiKey", selectedOrg.apiKey);
           clientLogger.info("Auto-selected API key stored in localStorage");
         }
-        setAutoSelected(true);
         clientLogger.info("Auto-selected organization based on URL match:", {
-          orgName: matchingOrg.orgName,
+          orgName: selectedOrg.orgName,
         });
       }
     }
-  }, [organizations, selectedOrgId, autoSelected]);
+  }, [autoSelected, selectedOrgId, organizations]);
 
   // Expose confirmSelection method via ref
   useImperativeHandle(ref, () => ({
@@ -131,11 +126,11 @@ const OrganizationDropdown = forwardRef<OrganizationDropdownRef>((_, ref) => {
     );
   }
 
-  if (error) {
+  if (displayError) {
     return (
       <Box sx={{ p: 2 }}>
         <Typography variant="body2" color="error">
-          {error}
+          {displayError}
         </Typography>
       </Box>
     );

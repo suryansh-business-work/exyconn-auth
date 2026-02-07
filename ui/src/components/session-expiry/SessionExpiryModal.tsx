@@ -23,6 +23,13 @@ const SessionExpiryModal: React.FC = () => {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(COUNTDOWN_SECONDS);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [prevIsExpired, setPrevIsExpired] = useState(isSessionExpired);
+
+  // Reset countdown when session expiry state changes (render-time state adjustment)
+  if (isSessionExpired !== prevIsExpired) {
+    setPrevIsExpired(isSessionExpired);
+    setCountdown(COUNTDOWN_SECONDS);
+  }
 
   const performLogout = useCallback(() => {
     setIsLoggingOut(true);
@@ -49,31 +56,24 @@ const SessionExpiryModal: React.FC = () => {
     performLogout();
   }, [performLogout]);
 
-  // Countdown timer effect
+  // Countdown timer effect - setState only inside interval callback (allowed)
   useEffect(() => {
     if (!isSessionExpired) {
-      setCountdown(COUNTDOWN_SECONDS);
-      return;
-    }
-
-    if (countdown <= 0) {
-      performLogout();
       return;
     }
 
     const timer = setInterval(() => {
-      setCountdown((prev) => prev - 1);
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          performLogout();
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isSessionExpired, countdown, performLogout]);
-
-  // Reset countdown when modal opens
-  useEffect(() => {
-    if (isSessionExpired) {
-      setCountdown(COUNTDOWN_SECONDS);
-    }
-  }, [isSessionExpired]);
+  }, [isSessionExpired, performLogout]);
 
   if (!isSessionExpired) {
     return null;

@@ -26,38 +26,38 @@ interface ViewUserDialogProps {
   onClose: () => void;
 }
 
+const InfoRow = ({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string | React.ReactNode;
+}) => (
+  <Box sx={{ display: "flex", alignItems: "center", gap: 2, py: 1.5 }}>
+    <Box
+      sx={{ color: "primary.main", display: "flex", alignItems: "center" }}
+    >
+      {icon}
+    </Box>
+    <Box sx={{ flex: 1 }}>
+      <Typography variant="caption" color="text.secondary" display="block">
+        {label}
+      </Typography>
+      <Typography variant="body2" fontWeight={500} component="div">
+        {value}
+      </Typography>
+    </Box>
+  </Box>
+);
+
 const ViewUserDialog: React.FC<ViewUserDialogProps> = ({
   open,
   user,
   onClose,
 }) => {
   if (!user) return null;
-
-  const InfoRow = ({
-    icon,
-    label,
-    value,
-  }: {
-    icon: React.ReactNode;
-    label: string;
-    value: string | React.ReactNode;
-  }) => (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 2, py: 1.5 }}>
-      <Box
-        sx={{ color: "primary.main", display: "flex", alignItems: "center" }}
-      >
-        {icon}
-      </Box>
-      <Box sx={{ flex: 1 }}>
-        <Typography variant="caption" color="text.secondary" display="block">
-          {label}
-        </Typography>
-        <Typography variant="body2" fontWeight={500} component="div">
-          {value}
-        </Typography>
-      </Box>
-    </Box>
-  );
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>

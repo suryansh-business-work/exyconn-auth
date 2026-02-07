@@ -26,7 +26,7 @@ export class OrganizationService {
    * Generate unique slug (handles duplicates by adding numbers)
    */
   static async generateUniqueSlug(orgName: string): Promise<string> {
-    let baseSlug = this.generateSlug(orgName);
+    const baseSlug = this.generateSlug(orgName);
     let slug = baseSlug;
     let counter = 1;
 
@@ -348,8 +348,7 @@ export class OrganizationService {
     updatedBy?: string,
   ): Promise<IOrganization | null> {
     try {
-      const { randomUUID } = require("crypto");
-      const newSecret = randomUUID();
+      const newSecret = crypto.randomUUID();
 
       const organization = await Organization.findByIdAndUpdate(
         id,

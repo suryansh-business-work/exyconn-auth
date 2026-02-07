@@ -194,7 +194,7 @@ export const formatTemplate = async (req: GodAuthRequest, res: Response) => {
         const indented = indent.repeat(depth) + trimmed;
 
         // Increase depth for opening tags (not self-closing)
-        if (trimmed.match(/^<\w[^>]*[^\/]>$/)) {
+        if (trimmed.match(/^<\w[^>]*[^/]>$/)) {
           depth++;
         }
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { useFormikContext, FieldArray } from "formik";
 import {
   Grid,
@@ -578,10 +578,9 @@ const RolePermissionEditor: React.FC<RolePermissionEditorProps> = ({
   const [activeTab, setActiveTab] = useState(0);
 
   // Get current permissions from role
-  const currentPermissions = useMemo(() => {
-    if (!role?.permissions) return [];
-    return role.permissions.map((p) => `${p.resource}.${p.action}`);
-  }, [role?.permissions]);
+  const currentPermissions = role?.permissions
+    ? role.permissions.map((p) => `${p.resource}.${p.action}`)
+    : [];
 
   const handlePermissionsChange = (selectedIds: string[]) => {
     const newPermissions = selectedIds.map((id) => {

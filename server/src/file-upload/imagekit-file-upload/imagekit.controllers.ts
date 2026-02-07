@@ -6,7 +6,7 @@ import {
   logger,
 } from "@exyconn/common/server";
 
-const fsPromises = require("fs").promises;
+import { promises as fsPromises } from "fs";
 
 const imagekit = new ImageKit({
   publicKey: "public_kgj5PULxw6pfjeO2IGwEVundBIQ=",

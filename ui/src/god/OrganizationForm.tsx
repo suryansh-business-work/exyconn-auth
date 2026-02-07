@@ -584,7 +584,7 @@ const OrganizationSchema = Yup.object().shape({
     function (value) {
       if (!value || value.trim().length === 0) return true;
       // Basic HTML validation - check for basic structure
-      const openTags = value.match(/<[^\/][^>]*>/g) || [];
+      const openTags = value.match(/<[^/][^>]*>/g) || [];
       const closeTags = value.match(/<\/[^>]+>/g) || [];
       // Simple check - if there are opening tags, there should be roughly similar closing tags
       if (
@@ -693,6 +693,7 @@ const OrganizationForm: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isCreateMode = !orgId;
@@ -1280,8 +1281,6 @@ const OrganizationForm: React.FC = () => {
           const completionProgress = calculateProgress();
 
           // Track incomplete fields for popover
-          const [anchorEl, setAnchorEl] =
-            React.useState<HTMLButtonElement | null>(null);
           const openPopover = Boolean(anchorEl);
 
           const getAllFields = () => {

@@ -157,7 +157,7 @@ const EmailTemplatesForm: React.FC = () => {
           const trimmed = line.trim();
           if (trimmed.match(/^<\/\w/)) depth--;
           const indented = indent.repeat(Math.max(0, depth)) + trimmed;
-          if (trimmed.match(/^<\w[^>]*[^\/]>.*$/)) depth++;
+          if (trimmed.match(/^<\w[^>]*[^/]>.*$/)) depth++;
           return indented;
         })
         .join("\n");

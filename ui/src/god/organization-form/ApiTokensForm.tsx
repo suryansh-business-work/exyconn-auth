@@ -66,7 +66,11 @@ const ApiTokensForm: React.FC = () => {
   const toggleTokenVisibility = (index: number) => {
     setVisibleTokens((prev) => {
       const newSet = new Set(prev);
-      newSet.has(index) ? newSet.delete(index) : newSet.add(index);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
       return newSet;
     });
   };

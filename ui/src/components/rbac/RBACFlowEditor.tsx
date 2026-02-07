@@ -72,6 +72,53 @@ export const RBACFlowEditor: React.FC<RBACFlowEditorProps> = ({
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState<string | null>(null);
 
+  const handleEditRole = useCallback(
+    (roleId: string) => {
+      const role = roles.find((r) => r.id === roleId);
+      if (role) {
+        setEditingRole({ ...role });
+        setIsEditDialogOpen(true);
+      }
+    },
+    [roles],
+  );
+
+  const handleDeleteConfirm = useCallback((roleId: string) => {
+    setRoleToDelete(roleId);
+    setDeleteConfirmOpen(true);
+  }, []);
+
+  const handlePermissionChange = useCallback(
+    (
+      roleId: string,
+      groupId: string,
+      permissionId: string,
+      accessType: AccessType,
+    ) => {
+      const updatedRoles = roles.map((role) => {
+        if (role.id !== roleId) return role;
+
+        return {
+          ...role,
+          accessGroups: role.accessGroups.map((ag) => {
+            if (ag.groupId !== groupId) return ag;
+
+            return {
+              ...ag,
+              permissions: ag.permissions.map((p) => {
+                if (p.permissionId !== permissionId) return p;
+                return { ...p, accessType };
+              }),
+            };
+          }),
+        };
+      });
+
+      onRolesChange(updatedRoles);
+    },
+    [roles, onRolesChange],
+  );
+
   // Generate nodes and edges from roles data
   const { initialNodes, initialEdges } = useMemo(() => {
     const nodes: Node[] = [];
@@ -191,7 +238,7 @@ export const RBACFlowEditor: React.FC<RBACFlowEditorProps> = ({
     });
 
     return { initialNodes: nodes, initialEdges: edges };
-  }, [roles, accessGroups, readOnly]);
+  }, [roles, accessGroups, readOnly, handleEditRole, handleDeleteConfirm, handlePermissionChange]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -201,22 +248,6 @@ export const RBACFlowEditor: React.FC<RBACFlowEditorProps> = ({
     setNodes(initialNodes);
     setEdges(initialEdges);
   }, [initialNodes, initialEdges, setNodes, setEdges]);
-
-  const handleEditRole = useCallback(
-    (roleId: string) => {
-      const role = roles.find((r) => r.id === roleId);
-      if (role) {
-        setEditingRole({ ...role });
-        setIsEditDialogOpen(true);
-      }
-    },
-    [roles],
-  );
-
-  const handleDeleteConfirm = useCallback((roleId: string) => {
-    setRoleToDelete(roleId);
-    setDeleteConfirmOpen(true);
-  }, []);
 
   const handleDeleteRole = useCallback(() => {
     if (roleToDelete) {
@@ -260,37 +291,6 @@ export const RBACFlowEditor: React.FC<RBACFlowEditorProps> = ({
     setIsEditDialogOpen(false);
     setEditingRole(null);
   }, [editingRole, roles, onRolesChange]);
-
-  const handlePermissionChange = useCallback(
-    (
-      roleId: string,
-      groupId: string,
-      permissionId: string,
-      accessType: AccessType,
-    ) => {
-      const updatedRoles = roles.map((role) => {
-        if (role.id !== roleId) return role;
-
-        return {
-          ...role,
-          accessGroups: role.accessGroups.map((ag) => {
-            if (ag.groupId !== groupId) return ag;
-
-            return {
-              ...ag,
-              permissions: ag.permissions.map((p) => {
-                if (p.permissionId !== permissionId) return p;
-                return { ...p, accessType };
-              }),
-            };
-          }),
-        };
-      });
-
-      onRolesChange(updatedRoles);
-    },
-    [roles, onRolesChange],
-  );
 
   const handleToggleAccessGroup = useCallback(
     (groupId: string, enabled: boolean) => {
