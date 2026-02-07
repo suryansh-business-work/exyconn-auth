@@ -6,7 +6,6 @@ interface VersionFooterProps {
 
 export function VersionFooter({ className = '' }: VersionFooterProps) {
   const version = packageJson.version;
-  const buildTime = import.meta.env.VITE_BUILD_TIME || new Date().toISOString();
 
   return (
     <footer
