@@ -238,7 +238,14 @@ export const RBACFlowEditor: React.FC<RBACFlowEditorProps> = ({
     });
 
     return { initialNodes: nodes, initialEdges: edges };
-  }, [roles, accessGroups, readOnly, handleEditRole, handleDeleteConfirm, handlePermissionChange]);
+  }, [
+    roles,
+    accessGroups,
+    readOnly,
+    handleEditRole,
+    handleDeleteConfirm,
+    handlePermissionChange,
+  ]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
