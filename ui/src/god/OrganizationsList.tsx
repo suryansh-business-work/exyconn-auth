@@ -12,7 +12,7 @@ import { Add, Dashboard, Business } from "@mui/icons-material";
 import { SearchBarWithStats, DeleteDialog } from "../common/components";
 import OrganizationsTable from "./organizations-list/OrganizationsTable";
 import { useOrganizationsList } from "./organizations-list/useOrganizationsList";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 
 const OrganizationsList: React.FC = () => {
   const {

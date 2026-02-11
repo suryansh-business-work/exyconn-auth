@@ -7,8 +7,8 @@ import { IOrganization } from "../god/organization/organization-forms/merged-int
 import {
   unauthorizedResponse,
   forbiddenResponse,
-} from "@exyconn/common/server";
-import { logger } from "@exyconn/common/server";
+  logger,
+} from "../common";
 
 export interface AuthRequest extends Request {
   user?: any;

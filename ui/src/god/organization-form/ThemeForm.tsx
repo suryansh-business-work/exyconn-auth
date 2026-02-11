@@ -21,7 +21,7 @@ import {
   ExpandMore,
   Error as ErrorIcon,
 } from "@mui/icons-material";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../../lib/client-logger";
 import SlugField from "../../components/SlugField";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import { OrganizationFormData } from "./types";

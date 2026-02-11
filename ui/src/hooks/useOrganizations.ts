@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { API_ENDPOINTS, API_BASE_URL } from "../apis";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../lib/client-logger";
 import { axios } from "../lib/api";
 
 export interface Organization {

@@ -19,7 +19,7 @@ import LoginBrandingPanel from "./login/LoginBrandingPanel";
 import LoginForm from "./login/LoginForm";
 import OrganizationNotFound from "./login/OrganizationNotFound";
 import { AuthLogo } from "../common/components";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 import { ClassicLoginPage } from "./login/classic";
 import { MinimalLoginPage } from "./login/minimal";
 import LoginLoadingSkeleton from "./login/LoginLoadingSkeleton";

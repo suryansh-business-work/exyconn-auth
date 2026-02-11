@@ -1,5 +1,5 @@
 /**
- * API Client - Global HTTP client using @exyconn/common
+ * API Client - Global HTTP client
  *
  * AUTHENTICATION STRATEGY (LocalStorage Only):
  * - All tokens (authToken, godToken, apiKey) are stored in localStorage
@@ -16,7 +16,7 @@ import {
   patchRequest as _patchRequest,
   deleteRequest as _deleteRequest,
   uploadFile as _uploadFile,
-} from "@exyconn/common/client/http";
+} from "./http";
 import { API_BASE_URL } from "../apis";
 import { sessionExpiryEmitter } from "./session-expiry-emitter";
 
@@ -167,7 +167,7 @@ axios.interceptors.response.use(
 );
 
 /**
- * Re-export HTTP methods from @exyconn/common with base URL configured
+ * Re-export HTTP methods with base URL configured
  */
 export const getRequest = _getRequest;
 export const postRequest = _postRequest;
@@ -177,7 +177,7 @@ export const deleteRequest = _deleteRequest;
 export const uploadFile = _uploadFile;
 
 /**
- * Re-export utilities from @exyconn/common
+ * Re-export utilities
  */
 export {
   extractData,
@@ -195,12 +195,12 @@ export {
   parseError,
   parseAxiosErrorMessage,
   axios,
-} from "@exyconn/common/client/http";
+} from "./http";
 
 export type {
   ApiResponse,
   PaginatedResponse,
-} from "@exyconn/common/client/http";
+} from "./http";
 
 // For backward compatibility, export a default api object
 export const api = {

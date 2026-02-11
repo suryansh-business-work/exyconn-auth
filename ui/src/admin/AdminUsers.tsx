@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "./AdminLayout";
 import { useAdminLogic, AdminUser } from "./useAdminLogic";
 import { useAuth } from "../contexts/AuthContext";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import {
   UsersFilterBar,

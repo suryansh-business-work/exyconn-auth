@@ -16,7 +16,7 @@ import {
   errorResponse,
   successResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../common";
 import { companies, getTokenSignKey } from "../config/companies.config";
 
 // Login

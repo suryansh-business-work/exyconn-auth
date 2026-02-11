@@ -13,7 +13,7 @@ import {
   noContentResponse,
   logger,
   parseBulkDelete,
-} from "@exyconn/common/server";
+} from "../common";
 import { sendEmail } from "../common/email.service";
 
 // Middleware to check admin role

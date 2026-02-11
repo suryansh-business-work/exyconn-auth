@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Home, ArrowBack } from "@mui/icons-material";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 
 const NotFound = () => {
   const navigate = useNavigate();

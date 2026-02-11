@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { successResponse } from "@exyconn/common/server";
+import { successResponse } from "../../common";
 
 /**
  * Logout endpoint - client clears localStorage tokens

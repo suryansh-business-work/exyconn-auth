@@ -24,7 +24,7 @@ import EditUserDialog from "./organization-users/EditUserDialog";
 import DeleteUserDialog from "./organization-users/DeleteUserDialog";
 import ViewUserDialog from "./organization-users/ViewUserDialog";
 import { useOrganizationUsers } from "./organization-users/useOrganizationUsers";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import type { GodUser } from "../types/god";
 

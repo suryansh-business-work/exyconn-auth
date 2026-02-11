@@ -1,4 +1,4 @@
-import { logger } from "@exyconn/common/server";
+import { logger } from "../../common";
 import {
   resolveRedirectionUrl,
   appendTokenToUrl,

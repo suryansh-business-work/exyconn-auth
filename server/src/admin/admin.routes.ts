@@ -3,7 +3,7 @@ import { authenticateOrgUser } from "../middlewares/user.middleware";
 import {
   queryParser,
   parseBulkDelete,
-} from "@exyconn/common/server/middleware";
+} from "../common/middleware";
 import * as AdminController from "./admin.controller";
 
 const router = Router();

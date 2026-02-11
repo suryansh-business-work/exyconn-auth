@@ -6,7 +6,7 @@ import {
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { computeRedirectionUrl } from "./base";
 
 export const getOAuthConfig = async (

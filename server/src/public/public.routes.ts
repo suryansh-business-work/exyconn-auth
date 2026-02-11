@@ -12,7 +12,7 @@ import {
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../common";
 import User from "../auth/auth.model";
 import { Response } from "express";
 

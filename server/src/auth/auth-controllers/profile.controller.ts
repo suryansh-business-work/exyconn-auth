@@ -1,7 +1,7 @@
 import { Response } from "express";
 import * as AuthService from "../auth.service";
 import User from "../auth.model";
-import { successResponse, errorResponse, logger } from "@exyconn/common/server";
+import { successResponse, errorResponse, logger } from "../../common";
 
 // Get current user profile (ME endpoint) - For regular users only, not god users
 export const getProfile = async (req: any, res: Response) => {

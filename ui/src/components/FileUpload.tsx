@@ -12,7 +12,7 @@ import {
 import { CloudUpload, Delete, InsertDriveFile } from "@mui/icons-material";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { API_ENDPOINTS } from "../apis";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../lib/client-logger";
 
 interface FileUploadProps {
   label?: string;

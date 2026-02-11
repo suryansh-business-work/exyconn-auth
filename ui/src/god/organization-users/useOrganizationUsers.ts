@@ -10,7 +10,7 @@ import {
   parseError,
 } from "../../lib/api";
 import type { GodUser } from "../../types/god";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../../lib/client-logger";
 
 interface OrganizationRole {
   name: string;

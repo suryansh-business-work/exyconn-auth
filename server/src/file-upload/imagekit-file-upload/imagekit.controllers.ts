@@ -4,7 +4,7 @@ import {
   successResponse,
   successResponseArr,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 
 import { promises as fsPromises } from "fs";
 

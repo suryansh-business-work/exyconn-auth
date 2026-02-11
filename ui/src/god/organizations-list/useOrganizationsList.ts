@@ -9,7 +9,7 @@ import {
   extractPaginatedData,
   parseError,
 } from "../../lib/api";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../../lib/client-logger";
 import type { GodOrganization } from "../../types/god";
 
 export const useOrganizationsList = () => {

@@ -1,8 +1,8 @@
 /**
- * CORS Configuration - Uses @exyconn/common for production-ready CORS setup
+ * CORS Configuration - Direct cors package usage
  */
 
-import { createCorsOptions } from "@exyconn/common/server/configs";
+import { CorsOptions } from "cors";
 
 // Custom allowed origins for auth service
 const productionOrigins = [
@@ -23,10 +23,26 @@ const developmentOrigins = [
   "http://localhost:4005",
 ];
 
-// Create CORS options using @exyconn/common with custom settings
-export const corsOptions = createCorsOptions({
-  productionOrigins: productionOrigins,
-  developmentOrigins: developmentOrigins,
+const isProduction = process.env.NODE_ENV === "production";
+
+// Create CORS options
+export const corsOptions: CorsOptions = {
+  origin: isProduction
+    ? (origin, callback) => {
+        if (!origin || productionOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      }
+    : (origin, callback) => {
+        const allOrigins = [...productionOrigins, ...developmentOrigins];
+        if (!origin || allOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(null, true); // Allow all in development
+        }
+      },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
   allowedHeaders: [
     "Content-Type",
@@ -39,6 +55,6 @@ export const corsOptions = createCorsOptions({
   ],
   credentials: true,
   maxAge: 86400,
-});
+};
 
 export default corsOptions;

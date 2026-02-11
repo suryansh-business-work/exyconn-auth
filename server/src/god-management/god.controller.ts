@@ -8,7 +8,7 @@ import {
   errorResponse,
   badRequestResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../common";
 import { sendEmail } from "../common/email.service";
 import jwt from "jsonwebtoken";
 

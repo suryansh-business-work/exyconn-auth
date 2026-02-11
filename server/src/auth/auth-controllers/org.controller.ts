@@ -6,7 +6,7 @@ import {
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 
 export const getCompanies = async (req: Request, res: Response) => {
   try {

@@ -12,7 +12,7 @@ import {
   Alert,
 } from "@mui/material";
 import { useSnackbar } from "../contexts/SnackbarContext";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../lib/client-logger";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 

@@ -7,8 +7,8 @@ import {
   notFoundResponse,
   noContentResponse,
   logger,
-} from "@exyconn/common/server";
-import { parseBulkDelete } from "@exyconn/common/server/middleware";
+} from "../../common";
+import { parseBulkDelete } from "../../common/middleware";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
 
 /**

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import mjml2html from "mjml";
 import fs from "fs";
 import path from "path";
-import { logger } from "@exyconn/common/server";
+import { logger } from "./logger";
 import { DEFAULT_TEMPLATES } from "./default-email-templates";
 
 // Default email theme colors (can be overridden per organization)

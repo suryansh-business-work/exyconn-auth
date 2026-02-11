@@ -6,7 +6,7 @@ import {
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { getOrgEmailConfig } from "./base";
 
 // Grace period in days before permanent deletion

@@ -6,7 +6,7 @@ import { AuthContainer, AuthLogo } from "../common/components";
 import ResetPasswordForm from "./reset-password/ResetPasswordForm";
 import SuccessDialog from "./forgot-password/SuccessDialog";
 import { useResetPasswordLogic } from "./reset-password/useResetPasswordLogic";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 
 const ResetPassword: React.FC = () => {
   const { orgDetails, loading } = useOrganization();

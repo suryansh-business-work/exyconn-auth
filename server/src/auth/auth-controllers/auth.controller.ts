@@ -14,7 +14,7 @@ import {
   errorResponse,
   unauthorizedResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { getOrgEmailConfig, computeRedirectionUrl } from "./base";
 
 export const login = async (req: Request, res: Response) => {

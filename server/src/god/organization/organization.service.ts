@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import Organization, { IOrganization } from "./organization.model";
-import { logger } from "@exyconn/common/server";
+import { logger } from "../../common";
 
 export class OrganizationService {
   /**

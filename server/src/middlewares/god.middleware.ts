@@ -4,8 +4,8 @@ import GodUser from "../god/user/user.model";
 import {
   unauthorizedResponse,
   forbiddenResponse,
-} from "@exyconn/common/server";
-import { logger } from "@exyconn/common/server";
+  logger,
+} from "../common";
 
 export interface GodAuthRequest extends Request {
   godUser?: any;

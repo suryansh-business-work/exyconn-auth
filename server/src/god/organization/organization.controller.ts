@@ -16,7 +16,7 @@ import {
   createdResponse,
   noContentResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
 import Organization from "./organization.model";
 

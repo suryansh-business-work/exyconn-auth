@@ -4,7 +4,7 @@ import {
   successResponse,
   badRequestResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
 
 // Error response helper for SMTP connection issues (returns 400 for user-correctable errors)

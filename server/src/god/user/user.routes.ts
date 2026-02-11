@@ -4,7 +4,7 @@ import { authenticateGod } from "../../middlewares/god.middleware";
 import {
   queryParser,
   parseBulkDelete,
-} from "@exyconn/common/server/middleware";
+} from "../../common/middleware";
 
 const router = Router();
 

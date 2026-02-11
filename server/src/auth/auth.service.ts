@@ -6,7 +6,7 @@ import ImageKit from "imagekit";
 import User from "./auth.model";
 import Organization from "../god/organization/organization.model";
 import { sendEmail } from "../common/email.service";
-import { logger } from "@exyconn/common/server";
+import { logger } from "../common";
 
 // ImageKit instance for profile picture uploads
 const imagekit = new ImageKit({
