@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import Organization from "../../god/organization/organization.model";
-import * as AuthService from "../auth.service";
 import {
   successResponse,
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 
 export const getCompanies = async (req: Request, res: Response) => {
   try {

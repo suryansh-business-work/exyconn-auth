@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useSignupLogic } from "./signup/useSignupLogic";
 import { AuthContainer, AuthLogo, AuthHeader } from "../common/components";
 import SignupForm from "./signup/SignupForm";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 import {
   Dialog,
   DialogTitle,

@@ -1,11 +1,8 @@
 /**
- * useLocalStorage - Re-exports from @exyconn/common
+ * useLocalStorage - Local implementations
  */
 
-export {
-  useLocalStorage,
-  useSessionStorage,
-} from "@exyconn/common/client/hooks";
+export { useLocalStorage, useSessionStorage } from "../lib/hooks";
 
 // Constants for localStorage keys - Keep these as they are app-specific
 export const STORAGE_KEYS = {

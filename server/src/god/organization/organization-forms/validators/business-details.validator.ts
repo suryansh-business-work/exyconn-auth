@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber, IsEnum } from "class-validator";
+import { IsOptional, IsNumber, IsEnum } from "class-validator";
 
 export class BusinessDetailsDto {
   @IsOptional()

@@ -13,7 +13,7 @@ import {
   errorResponse,
   successResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { getOrgEmailConfig } from "./base";
 
 export const forgotPassword = async (

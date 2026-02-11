@@ -1,4 +1,3 @@
-import { logger } from "@exyconn/common/server";
 import {
   resolveRedirectionUrl,
   appendTokenToUrl,

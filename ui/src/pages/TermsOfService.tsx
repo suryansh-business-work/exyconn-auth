@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Typography, Paper, Box, Divider } from "@mui/material";
 import { useSearchParams, Link } from "react-router-dom";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 
 const TermsOfService: React.FC = () => {
   const [searchParams] = useSearchParams();

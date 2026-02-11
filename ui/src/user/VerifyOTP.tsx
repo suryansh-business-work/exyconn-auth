@@ -4,7 +4,7 @@ import { AuthContainer, AuthLogo } from "../common/components";
 import VerifyOTPForm from "./verify-otp/VerifyOTPForm";
 import SuccessDialog from "./forgot-password/SuccessDialog";
 import { useVerifyOTPLogic } from "./verify-otp/useVerifyOTPLogic";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 
 const VerifyOTP: React.FC = () => {
   const { orgDetails, loading } = useOrganization();

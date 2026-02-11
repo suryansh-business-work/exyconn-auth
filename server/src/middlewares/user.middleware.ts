@@ -4,11 +4,7 @@ import User from "../user/user.model";
 import GodUser from "../god/user/user.model";
 import Organization from "../god/organization/organization.model";
 import { IOrganization } from "../god/organization/organization-forms/merged-interface-index";
-import {
-  unauthorizedResponse,
-  forbiddenResponse,
-} from "@exyconn/common/server";
-import { logger } from "@exyconn/common/server";
+import { unauthorizedResponse, forbiddenResponse, logger } from "../common";
 
 export interface AuthRequest extends Request {
   user?: any;

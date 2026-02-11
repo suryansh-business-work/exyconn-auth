@@ -12,36 +12,17 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 
-import { BasicInfoDto } from "./basic-info.validator";
-import { ContactInfoDto, OrgPhoneDto } from "./contact-info.validator";
-import { BusinessDetailsDto } from "./business-details.validator";
-import {
-  AddressFormDto,
-  OrgAddressDto,
-  OrgRegionDto,
-} from "./address.validator";
-import { CompanyRegistrationDto } from "./company-registration.validator";
-import {
-  BrandingAssetsDto,
-  OrgLogoDto,
-  LoginBgImageDto,
-} from "./branding-assets.validator";
-import { LoginDesignDto } from "./login-design.validator";
-import {
-  CustomTextFormDto,
-  CustomTextSectionDto,
-} from "./custom-text.validator";
-import { ThemeFormDto, OrgThemeDto } from "./theme.validator";
-import { SecurityFormDto, OrgOptionsDto } from "./security.validator";
+import { OrgPhoneDto } from "./contact-info.validator";
+import { OrgAddressDto, OrgRegionDto } from "./address.validator";
+import { OrgLogoDto, LoginBgImageDto } from "./branding-assets.validator";
+import { CustomTextSectionDto } from "./custom-text.validator";
+import { OrgThemeDto } from "./theme.validator";
+import { OrgOptionsDto } from "./security.validator";
 import { JwtSettingsDto } from "./jwt-settings.validator";
 import { OAuthSettingsDto } from "./oauth-settings.validator";
 import { SmtpSettingsDto } from "./smtp-settings.validator";
-import {
-  RedirectionSettingsFormDto,
-  OrgRedirectionSettingDto,
-} from "./redirection-settings.validator";
+import { OrgRedirectionSettingDto } from "./redirection-settings.validator";
 import { MailSettingsDto } from "./mail-settings.validator";
-import { CustomCodeFormDto } from "./custom-code.validator";
 import { RoleDto } from "./role-management.validator";
 import { FeatureFlagsDto } from "./feature-flags.validator";
 // Combines all forms for creating a new organization

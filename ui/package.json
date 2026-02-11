@@ -19,7 +19,6 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@exyconn/common": "^2.3.6",
     "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^6.4.0",
     "@mui/lab": "^6.0.0-beta.26",

@@ -1,8 +1,8 @@
 /**
- * Rate Limiter Configuration - Uses @exyconn/common for production-ready rate limiting
+ * Rate Limiter Configuration - Direct express-rate-limit with IPv6-safe key generator
  */
 
-import { createRateLimiter } from "@exyconn/common/server/configs";
+import rateLimit from "express-rate-limit";
 import { ENV } from "./env";
 
 const isDevOrTest = ENV.NODE_ENV === "development" || ENV.NODE_ENV === "test";
@@ -11,20 +11,32 @@ const isDevOrTest = ENV.NODE_ENV === "development" || ENV.NODE_ENV === "test";
  * Standard rate limiter for general API endpoints
  * 100 requests per 15 minutes
  */
-export const standardRateLimiter = createRateLimiter({
+export const standardRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  maxRequests: 100,
-  message: "Too many requests, please try again later.",
+  max: 100,
+  message: {
+    message: "Too many requests, please try again later.",
+    status: "rate-limit-exceeded",
+    statusCode: 429,
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 /**
  * Strict rate limiter for sensitive endpoints (login, signup, password reset)
  * 20 requests per 15 minutes (200 in dev/test)
  */
-export const strictRateLimiter = createRateLimiter({
+export const strictRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  maxRequests: isDevOrTest ? 200 : 20,
-  message: "Too many requests, please try again later.",
+  max: isDevOrTest ? 200 : 20,
+  message: {
+    message: "Too many requests, please try again later.",
+    status: "rate-limit-exceeded",
+    statusCode: 429,
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
   skipSuccessfulRequests: true,
 });
 
@@ -33,10 +45,16 @@ export const strictRateLimiter = createRateLimiter({
  * Applied globally to all routes
  * 60 requests per minute
  */
-export const ddosProtectionLimiter = createRateLimiter({
+export const ddosProtectionLimiter = rateLimit({
   windowMs: 60 * 1000,
-  maxRequests: 60,
-  message: "Rate limit exceeded. Please slow down.",
+  max: 60,
+  message: {
+    message: "Rate limit exceeded. Please slow down.",
+    status: "rate-limit-exceeded",
+    statusCode: 429,
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 export const RATE_LIMIT_CONFIG = {

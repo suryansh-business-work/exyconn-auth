@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 import { localStorageUtils, STORAGE_KEYS } from "../hooks/useLocalStorage";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../lib/client-logger";
 import { useOrganizations } from "../hooks/useOrganizations";
 
 export interface OrganizationDropdownRef {

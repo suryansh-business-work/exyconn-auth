@@ -13,7 +13,7 @@ import {
 import { Menu } from "@mui/icons-material";
 import { useProfileLogic } from "./useProfileLogic";
 import UserLayout from "../../components/UserLayout";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../../lib/hooks";
 import { useOrganization } from "../../contexts/OrganizationContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";

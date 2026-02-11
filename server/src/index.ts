@@ -5,29 +5,26 @@ import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import fileUpload from "express-fileupload";
-import os from "os";
 import {
   createHealthHandler,
   createRootHandler,
   HealthConfig,
-} from "@exyconn/common/server";
+} from "./common/health";
 
 // Load environment variables
 dotenv.config();
 
 // Import configurations
 import { ENV } from "./config/env";
-import { connectDB } from "@exyconn/common/server";
-import { logger } from "@exyconn/common/server";
-import { errorResponse } from "@exyconn/common/server";
+import { connectDB } from "./common/db";
+import { logger } from "./common/logger";
+import { errorResponse } from "./common/responses";
 
 // Import rate limiting and CORS configurations
 import {
   standardRateLimiter,
   ddosProtectionLimiter,
-  RATE_LIMIT_CONFIG,
 } from "./config/rate-limiter.config";
-import { corsOptions } from "./config/cors.config";
 
 // Import routes
 import userRoutes from "./user/user.routes";
@@ -50,16 +47,17 @@ const MONGODB_URI =
   "mongodb+srv://suryanshbusinesswork:education54@sibera-box.ofemtir.mongodb.net/dynamic-auth?retryWrites=true&w=majority";
 
 // ==============================================
+// PROXY TRUST - Required for proper IP extraction behind proxies (Heroku, Nginx, etc.)
+// Must be set BEFORE rate limiters. Use 1 (single proxy hop) instead of true
+// to prevent trivial IP-based rate-limit bypass (ERR_ERL_PERMISSIVE_TRUST_PROXY).
+// ==============================================
+app.set("trust proxy", 1);
+
+// ==============================================
 // DDOS PROTECTION & RATE LIMITING
 // ==============================================
 app.use(ddosProtectionLimiter); // DDoS protection (60 req/min)
 app.use("/v1/api", standardRateLimiter); // Standard rate limiting (100 req/15min)
-
-// ==============================================
-// ==============================================
-// PROXY TRUST - Required for proper IP extraction behind proxies (Heroku, Nginx, etc.)
-// ==============================================
-app.set("trust proxy", true);
 
 // ==============================================
 // CORS CONFIGURATION - Allow all origins with credentials
@@ -192,7 +190,7 @@ const userSwaggerOptions = {
   ],
 };
 
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
+const _swaggerSpec = swaggerJsdoc(swaggerOptions);
 const godSwaggerSpec = swaggerJsdoc(godSwaggerOptions);
 const adminSwaggerSpec = swaggerJsdoc(adminSwaggerOptions);
 const userSwaggerSpec = swaggerJsdoc(userSwaggerOptions);
@@ -295,7 +293,7 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
   logger.error("Unhandled error", {
     error: err.message,
     stack: err.stack,

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { API_ENDPOINTS } from "../apis";
 import { localStorageUtils, STORAGE_KEYS } from "../hooks/useLocalStorage";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../lib/client-logger";
 import { axios } from "../lib/api";
 import { RedirectionSetting } from "../types/organization";
 

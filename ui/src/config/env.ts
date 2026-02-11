@@ -1,9 +1,9 @@
 /**
- * Environment Configuration - Uses @exyconn/common utilities
+ * Environment Configuration
  */
 
-import { isProd } from "@exyconn/common/shared/config";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { isProd } from "../lib/config";
+import { clientLogger } from "../lib/client-logger";
 
 // Use environment variable if set, otherwise auto-detect
 const getApiBaseUrl = () => {

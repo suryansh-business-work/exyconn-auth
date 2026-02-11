@@ -27,8 +27,8 @@ import {
 } from "@mui/icons-material";
 import { API_ENDPOINTS } from "../apis";
 import { getRequest, extractData, parseError } from "../lib/api";
-import { usePageTitle } from "@exyconn/common/client/hooks";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { usePageTitle } from "../lib/hooks";
+import { clientLogger } from "../lib/client-logger";
 
 interface OrgData {
   orgName?: string;

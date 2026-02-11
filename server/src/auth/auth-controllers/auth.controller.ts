@@ -2,19 +2,14 @@ import { Request, Response } from "express";
 import { validate } from "class-validator";
 import * as AuthService from "../auth.service";
 import User from "../auth.model";
-import {
-  LoginDto,
-  SignupDto,
-  VerifyDto,
-  ResendVerificationOtpDto,
-} from "../auth.validators";
+import { LoginDto, SignupDto, VerifyDto } from "../auth.validators";
 import {
   successResponse,
   badRequestResponse,
   errorResponse,
   unauthorizedResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { getOrgEmailConfig, computeRedirectionUrl } from "./base";
 
 export const login = async (req: Request, res: Response) => {

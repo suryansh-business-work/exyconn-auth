@@ -22,7 +22,6 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@exyconn/common": "^2.3.6",
     "@types/express-fileupload": "^1.5.1",
     "@types/express-session": "^1.18.2",
     "@types/passport": "^1.0.17",

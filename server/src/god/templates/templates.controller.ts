@@ -10,7 +10,7 @@ import {
   errorResponse,
   badRequestResponse,
   notFoundResponse,
-} from "@exyconn/common/server";
+} from "../../common";
 import { DEFAULT_TEMPLATES } from "../../common/default-email-templates";
 
 const router = Router();

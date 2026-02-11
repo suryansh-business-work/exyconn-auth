@@ -1,9 +1,13 @@
 /**
- * Common utilities - Re-exports from @exyconn/common and local services
+ * Common utilities - Local implementations
  */
 
-// Re-export from @exyconn/common
-export * from "@exyconn/common/server";
+export * from "./logger";
+export * from "./responses";
+export * from "./status";
+export * from "./db";
+export * from "./health";
+export * from "./middleware";
 
 // Re-export local services
 export * from "./email.service";

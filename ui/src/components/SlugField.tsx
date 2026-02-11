@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, InputAdornment, IconButton, Tooltip } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { useSnackbar } from "../contexts/SnackbarContext";
-import { copyToClipboard } from "@exyconn/common/client/utils";
+import { copyToClipboard } from "../lib/utils";
 
 interface SlugFieldProps {
   label: string;

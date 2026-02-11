@@ -26,8 +26,8 @@ import {
   isSuccess,
   parseError,
 } from "../lib/api";
-import { clientLogger } from "@exyconn/common/client/logger";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { clientLogger } from "../lib/client-logger";
+import { usePageTitle } from "../lib/hooks";
 
 interface OrganizationStats {
   total: number;

@@ -1,10 +1,9 @@
 import { Response } from "express";
 import Organization from "../organization/organization.model";
 import User from "../../user/user.model";
-import { successResponse, errorResponse } from "@exyconn/common/server";
-import { logger } from "@exyconn/common/server";
+import { successResponse, errorResponse } from "../../common";
+import { logger } from "../../common";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
-import { AuthRequest } from "../../middlewares/user.middleware";
 
 /**
  * Get comprehensive organization statistics (God level)

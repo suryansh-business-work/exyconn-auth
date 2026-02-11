@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { randomUUID } from "crypto";
-import { logger } from "@exyconn/common/server";
+import { logger } from "../../common";
 import {
   IOrganization,
   ICustomTextSection,

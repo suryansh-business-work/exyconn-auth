@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import User from "../auth.model";
 import * as AuthService from "../auth.service";
 import {
@@ -6,7 +6,7 @@ import {
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { getOrgEmailConfig } from "./base";
 
 // Grace period in days before permanent deletion

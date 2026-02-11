@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import { useAuth } from "../contexts/AuthContext";
 import { API_BASE_URL } from "../apis";
-import { usePageTitle } from "@exyconn/common/client/hooks";
+import { usePageTitle } from "../lib/hooks";
 import {
   postRequest,
   getRequest,
@@ -13,7 +13,7 @@ import {
   isSuccess,
   parseError,
 } from "../lib/api";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../lib/client-logger";
 import {
   GodLoginLoadingSkeleton,
   GodLoginWarningAlert,
@@ -57,7 +57,6 @@ const GodLogin: React.FC = () => {
     }, 800);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (values: { email: string; password: string }) => {

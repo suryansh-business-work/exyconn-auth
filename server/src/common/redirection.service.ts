@@ -3,11 +3,8 @@
  * Handles role-based redirection resolution logic
  */
 
-import {
-  IOrgRedirectionSetting,
-  IRedirectionUrl,
-} from "../god/organization/organization-forms/merged-interface-index";
-import { logger } from "@exyconn/common/server";
+import { IOrgRedirectionSetting } from "../god/organization/organization-forms/merged-interface-index";
+import { logger } from "./logger";
 
 export interface RedirectionResult {
   url: string;

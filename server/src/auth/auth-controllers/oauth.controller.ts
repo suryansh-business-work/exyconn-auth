@@ -2,11 +2,7 @@ import { Request, Response } from "express";
 import axios from "axios";
 import * as AuthService from "../auth.service";
 import User from "../auth.model";
-import {
-  badRequestResponse,
-  errorResponse,
-  logger,
-} from "@exyconn/common/server";
+import { badRequestResponse, errorResponse, logger } from "../../common";
 import { computeRedirectionUrl } from "./base";
 
 export const getOAuthConfig = async (
@@ -1405,7 +1401,7 @@ export const handleAppleCallback = async (req: Request, res: Response) => {
       return res.redirect(errorRedirect);
     }
 
-    const appleSettings = company.oauthSettings.apple;
+    const _appleSettings = company.oauthSettings.apple;
 
     // Decode the id_token to get user info (Apple includes this in the callback)
     let email = "";
@@ -1439,7 +1435,7 @@ export const handleAppleCallback = async (req: Request, res: Response) => {
 
     if (!email) {
       // Try to get email from token exchange if id_token decode failed
-      const callbackUrl = `${process.env.API_BASE_URL || "https://exyconn-auth-server.exyconn.com"}/v1/api/auth/apple/callback`;
+      const _callbackUrl = `${process.env.API_BASE_URL || "https://exyconn-auth-server.exyconn.com"}/v1/api/auth/apple/callback`;
 
       // Generate client secret for Apple (requires private key)
       // For now, we'll use a simplified approach - Apple OAuth requires more complex setup

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Organization from "../god/organization/organization.model";
-import { unauthorizedResponse, logger } from "@exyconn/common/server";
+import { unauthorizedResponse, logger } from "../common";
 import { extractApiKey } from "../utils/auth-utils";
 
 export interface ApiKeyRequest extends Request {

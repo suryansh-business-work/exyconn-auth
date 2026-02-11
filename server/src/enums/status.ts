@@ -1,6 +1,5 @@
 /**
- * Status Enums - Re-exports from @exyconn/common
- * Maintains backward compatibility while using shared utilities
+ * Status Enums - Re-exports from local common
  */
 
-export { statusCode, statusMessage } from "@exyconn/common/server";
+export { statusCode, statusMessage } from "../common/status";

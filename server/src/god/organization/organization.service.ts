@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import Organization, { IOrganization } from "./organization.model";
-import { logger } from "@exyconn/common/server";
+import { logger } from "../../common";
 
 export class OrganizationService {
   /**
@@ -303,7 +303,7 @@ export class OrganizationService {
    */
   static async deleteOrganization(
     id: string,
-    deletedBy?: string,
+    _deletedBy?: string,
   ): Promise<IOrganization | null> {
     try {
       const organization = await Organization.findByIdAndDelete(id);

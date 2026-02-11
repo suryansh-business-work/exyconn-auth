@@ -10,7 +10,7 @@ import {
   isSuccess,
   parseError,
 } from "../../lib/api";
-import { clientLogger } from "@exyconn/common/client/logger";
+import { clientLogger } from "../../lib/client-logger";
 import { Organization } from "../../types/organization";
 
 export type OAuthProvider = "google" | "microsoft" | "apple" | "github";

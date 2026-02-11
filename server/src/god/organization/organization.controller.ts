@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { validate } from "class-validator";
 import { plainToClass } from "class-transformer";
 import { OrganizationService } from "./organization.service";
@@ -16,7 +16,7 @@ import {
   createdResponse,
   noContentResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
 import Organization from "./organization.model";
 

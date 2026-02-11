@@ -7,7 +7,6 @@ import {
   VerifyDto,
   ForgotPasswordDto,
   ResetPasswordDto,
-  UpdateProfileDto,
 } from "./user.validators";
 
 import { AuthRequest } from "../middlewares/user.middleware";
@@ -16,8 +15,8 @@ import {
   errorResponse,
   successResponse,
   logger,
-} from "@exyconn/common/server";
-import { companies, getTokenSignKey } from "../config/companies.config";
+} from "../common";
+import { companies } from "../config/companies.config";
 
 // Login
 export const login = async (req: Request, res: Response) => {

@@ -7,7 +7,7 @@ import {
   badRequestResponse,
   errorResponse,
   logger,
-} from "@exyconn/common/server";
+} from "../../common";
 import { getOrgEmailConfig } from "./base";
 
 // Enable MFA for user - sends OTP email
