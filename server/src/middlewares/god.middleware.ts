@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import GodUser from "../god/user/user.model";
-import {
-  unauthorizedResponse,
-  forbiddenResponse,
-  logger,
-} from "../common";
+import { unauthorizedResponse, forbiddenResponse, logger } from "../common";
 
 export interface GodAuthRequest extends Request {
   godUser?: any;

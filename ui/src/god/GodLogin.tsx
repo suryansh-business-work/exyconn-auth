@@ -57,7 +57,6 @@ const GodLogin: React.FC = () => {
     }, 800);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (values: { email: string; password: string }) => {

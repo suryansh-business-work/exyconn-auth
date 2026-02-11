@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import fileUpload from "express-fileupload";
-import os from "os";
 import {
   createHealthHandler,
   createRootHandler,
@@ -25,9 +24,7 @@ import { errorResponse } from "./common/responses";
 import {
   standardRateLimiter,
   ddosProtectionLimiter,
-  RATE_LIMIT_CONFIG,
 } from "./config/rate-limiter.config";
-import { corsOptions } from "./config/cors.config";
 
 // Import routes
 import userRoutes from "./user/user.routes";
@@ -193,7 +190,7 @@ const userSwaggerOptions = {
   ],
 };
 
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
+const _swaggerSpec = swaggerJsdoc(swaggerOptions);
 const godSwaggerSpec = swaggerJsdoc(godSwaggerOptions);
 const adminSwaggerSpec = swaggerJsdoc(adminSwaggerOptions);
 const userSwaggerSpec = swaggerJsdoc(userSwaggerOptions);
@@ -296,7 +293,7 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
   logger.error("Unhandled error", {
     error: err.message,
     stack: err.stack,

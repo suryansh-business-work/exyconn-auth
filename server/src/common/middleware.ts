@@ -29,11 +29,18 @@ export interface ParsedQuery {
 /**
  * Query parser middleware - parses pagination, sorting, search, and filter params
  */
-export const queryParser = (req: Request, _res: Response, next: NextFunction): void => {
+export const queryParser = (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+): void => {
   const query = req.query;
 
   const page = Math.max(1, parseInt(query.page as string) || 1);
-  const limit = Math.min(100, Math.max(1, parseInt(query.limit as string) || 10));
+  const limit = Math.min(
+    100,
+    Math.max(1, parseInt(query.limit as string) || 10),
+  );
   const skip = (page - 1) * limit;
 
   // Sort parsing
@@ -54,7 +61,10 @@ export const queryParser = (req: Request, _res: Response, next: NextFunction): v
   let filter: Record<string, unknown> = {};
   if (query.filter) {
     try {
-      filter = typeof query.filter === "string" ? JSON.parse(query.filter) : (query.filter as Record<string, unknown>);
+      filter =
+        typeof query.filter === "string"
+          ? JSON.parse(query.filter)
+          : (query.filter as Record<string, unknown>);
     } catch {
       filter = {};
     }
@@ -71,7 +81,19 @@ export const queryParser = (req: Request, _res: Response, next: NextFunction): v
 
   // Copy over any additional query parameters
   for (const [key, value] of Object.entries(query)) {
-    if (!["page", "limit", "sort", "sortBy", "sortOrder", "order", "search", "q", "filter"].includes(key)) {
+    if (
+      ![
+        "page",
+        "limit",
+        "sort",
+        "sortBy",
+        "sortOrder",
+        "order",
+        "search",
+        "q",
+        "filter",
+      ].includes(key)
+    ) {
       req.parsedQuery[key] = value;
     }
   }
@@ -83,7 +105,11 @@ export const queryParser = (req: Request, _res: Response, next: NextFunction): v
  * Parse bulk delete middleware - parses request body for array of IDs
  * Supports ["*"] for delete-all
  */
-export const parseBulkDelete = (req: Request, res: Response, next: NextFunction): void => {
+export const parseBulkDelete = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void => {
   const { ids } = req.body;
 
   if (!ids || !Array.isArray(ids)) {
@@ -114,7 +140,9 @@ export const parseBulkDelete = (req: Request, res: Response, next: NextFunction)
   }
 
   // Validate ObjectIds
-  const invalidIds = ids.filter((id: string) => !mongoose.Types.ObjectId.isValid(id));
+  const invalidIds = ids.filter(
+    (id: string) => !mongoose.Types.ObjectId.isValid(id),
+  );
   if (invalidIds.length > 0) {
     res.status(400).json({
       message: `Invalid IDs: ${invalidIds.join(", ")}`,

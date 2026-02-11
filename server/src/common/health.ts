@@ -38,7 +38,6 @@ const getPackageVersions = (packages: string[]): Record<string, string> => {
   const versions: Record<string, string> = {};
   for (const pkg of packages) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const pkgJson = require(`${pkg}/package.json`);
       versions[pkg] = pkgJson.version || "unknown";
     } catch {

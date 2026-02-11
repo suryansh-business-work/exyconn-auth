@@ -1,10 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import nodemailer from "nodemailer";
-import {
-  successResponse,
-  badRequestResponse,
-  logger,
-} from "../../common";
+import { successResponse, badRequestResponse, logger } from "../../common";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
 
 // Error response helper for SMTP connection issues (returns 400 for user-correctable errors)

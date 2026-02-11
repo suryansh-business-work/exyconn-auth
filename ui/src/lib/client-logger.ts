@@ -16,7 +16,13 @@ export class ClientLogger {
   private minLevel: number;
   private showTimestamp: boolean;
 
-  constructor(config: { prefix?: string; minLevel?: LogLevel; showTimestamp?: boolean } = {}) {
+  constructor(
+    config: {
+      prefix?: string;
+      minLevel?: LogLevel;
+      showTimestamp?: boolean;
+    } = {},
+  ) {
     this.prefix = config.prefix || "[App]";
     this.minLevel = LOG_LEVELS[config.minLevel || "debug"];
     this.showTimestamp = config.showTimestamp ?? true;

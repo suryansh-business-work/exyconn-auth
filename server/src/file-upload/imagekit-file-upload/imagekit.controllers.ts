@@ -1,10 +1,5 @@
 import ImageKit from "imagekit";
-import {
-  errorResponse,
-  successResponse,
-  successResponseArr,
-  logger,
-} from "../../common";
+import { errorResponse, successResponseArr, logger } from "../../common";
 
 import { promises as fsPromises } from "fs";
 
@@ -51,7 +46,7 @@ const imageKitUpload: any = async (req: any, res: any) => {
 
     // Handle single file upload
     if (!Array.isArray(fileData)) {
-      const { name, data, size, mimetype, tempFilePath } = fileData;
+      const { name, data, _size, _mimetype, tempFilePath } = fileData;
 
       // express-fileupload with useTempFiles: true uses tempFilePath
       let fileToUpload: any;

@@ -8,7 +8,7 @@ import { logger } from "./logger";
 export const connectDB = async (
   mongoUri: string,
   options: mongoose.ConnectOptions = {},
-  customLogger?: typeof logger
+  customLogger?: typeof logger,
 ): Promise<typeof mongoose> => {
   const log = customLogger || logger;
 
@@ -42,7 +42,9 @@ export const connectDB = async (
   }
 };
 
-export const disconnectDB = async (customLogger?: typeof logger): Promise<void> => {
+export const disconnectDB = async (
+  customLogger?: typeof logger,
+): Promise<void> => {
   const log = customLogger || logger;
   try {
     await mongoose.disconnect();

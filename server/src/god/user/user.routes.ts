@@ -1,10 +1,7 @@
 import { Router } from "express";
 import * as UserController from "./user.controller";
 import { authenticateGod } from "../../middlewares/god.middleware";
-import {
-  queryParser,
-  parseBulkDelete,
-} from "../../common/middleware";
+import { queryParser, parseBulkDelete } from "../../common/middleware";
 
 const router = Router();
 

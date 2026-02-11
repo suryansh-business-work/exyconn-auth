@@ -8,7 +8,6 @@ import {
   noContentResponse,
   logger,
 } from "../../common";
-import { parseBulkDelete } from "../../common/middleware";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
 
 /**

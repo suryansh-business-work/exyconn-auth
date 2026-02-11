@@ -99,7 +99,7 @@ const createTransporter = (org?: OrganizationEmailConfig) => {
 // Default transporter for verification
 const defaultTransporter = createTransporter();
 
-defaultTransporter.verify((error, success) => {
+defaultTransporter.verify((error, _success) => {
   if (error) {
     logger.error("Email transporter verification failed", {
       error: error.message,

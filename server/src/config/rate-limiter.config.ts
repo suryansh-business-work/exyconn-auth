@@ -14,7 +14,11 @@ const isDevOrTest = ENV.NODE_ENV === "development" || ENV.NODE_ENV === "test";
 export const standardRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
-  message: { message: "Too many requests, please try again later.", status: "rate-limit-exceeded", statusCode: 429 },
+  message: {
+    message: "Too many requests, please try again later.",
+    status: "rate-limit-exceeded",
+    statusCode: 429,
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -26,7 +30,11 @@ export const standardRateLimiter = rateLimit({
 export const strictRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: isDevOrTest ? 200 : 20,
-  message: { message: "Too many requests, please try again later.", status: "rate-limit-exceeded", statusCode: 429 },
+  message: {
+    message: "Too many requests, please try again later.",
+    status: "rate-limit-exceeded",
+    statusCode: 429,
+  },
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: true,
@@ -40,7 +48,11 @@ export const strictRateLimiter = rateLimit({
 export const ddosProtectionLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 60,
-  message: { message: "Rate limit exceeded. Please slow down.", status: "rate-limit-exceeded", statusCode: 429 },
+  message: {
+    message: "Rate limit exceeded. Please slow down.",
+    status: "rate-limit-exceeded",
+    statusCode: 429,
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });

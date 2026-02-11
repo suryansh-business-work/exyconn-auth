@@ -303,7 +303,7 @@ export class OrganizationService {
    */
   static async deleteOrganization(
     id: string,
-    deletedBy?: string,
+    _deletedBy?: string,
   ): Promise<IOrganization | null> {
     try {
       const organization = await Organization.findByIdAndDelete(id);

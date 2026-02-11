@@ -4,7 +4,6 @@ import User from "../../user/user.model";
 import { successResponse, errorResponse } from "../../common";
 import { logger } from "../../common";
 import { GodAuthRequest } from "../../middlewares/god.middleware";
-import { AuthRequest } from "../../middlewares/user.middleware";
 
 /**
  * Get comprehensive organization statistics (God level)

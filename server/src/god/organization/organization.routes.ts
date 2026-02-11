@@ -11,10 +11,7 @@ import {
   regenerateApiKey,
 } from "./organization.controller";
 import { authenticateGod } from "../../middlewares/god.middleware";
-import {
-  queryParser,
-  parseBulkDelete,
-} from "../../common/middleware";
+import { queryParser, parseBulkDelete } from "../../common/middleware";
 
 const router = express.Router();
 

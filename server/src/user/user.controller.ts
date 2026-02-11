@@ -7,7 +7,6 @@ import {
   VerifyDto,
   ForgotPasswordDto,
   ResetPasswordDto,
-  UpdateProfileDto,
 } from "./user.validators";
 
 import { AuthRequest } from "../middlewares/user.middleware";
@@ -17,7 +16,7 @@ import {
   successResponse,
   logger,
 } from "../common";
-import { companies, getTokenSignKey } from "../config/companies.config";
+import { companies } from "../config/companies.config";
 
 // Login
 export const login = async (req: Request, res: Response) => {

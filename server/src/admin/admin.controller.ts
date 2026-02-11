@@ -12,7 +12,6 @@ import {
   badRequestResponse,
   noContentResponse,
   logger,
-  parseBulkDelete,
 } from "../common";
 import { sendEmail } from "../common/email.service";
 
@@ -213,7 +212,7 @@ export const createUser = async (req: AuthRequest, res: Response) => {
           verificationLink: "", // No verification needed
         },
       );
-    } catch (emailError) {
+    } catch (_emailError) {
       logger.warn("Failed to send welcome email", { email });
     }
 
@@ -324,7 +323,7 @@ export const resetUserPassword = async (req: AuthRequest, res: Response) => {
             }
           : undefined,
       );
-    } catch (emailError) {
+    } catch (_emailError) {
       logger.warn("Failed to send password reset email", { email: user.email });
     }
 

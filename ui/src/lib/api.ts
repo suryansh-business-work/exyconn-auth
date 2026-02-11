@@ -197,10 +197,7 @@ export {
   axios,
 } from "./http";
 
-export type {
-  ApiResponse,
-  PaginatedResponse,
-} from "./http";
+export type { ApiResponse, PaginatedResponse } from "./http";
 
 // For backward compatibility, export a default api object
 export const api = {
