@@ -124,6 +124,7 @@ const OAuthCallback: React.FC = () => {
 
       // Normal OAuth flow (non-test mode)
       if (error) {
+        if (error === "user_not_in_organization") {
           showSnackbar(
             "This user account does not belong to this organization.",
             "error",
