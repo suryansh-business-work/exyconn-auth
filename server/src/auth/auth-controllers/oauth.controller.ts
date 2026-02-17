@@ -56,14 +56,20 @@ export const getOAuthDiagnostics = async (
           storedClientId: googleSettings?.clientId,
           storedClientIdLength: (googleSettings?.clientId || "").length,
           storedClientIdTrimmed: (googleSettings?.clientId || "").trim(),
-          storedClientIdTrimmedLength: (googleSettings?.clientId || "").trim().length,
-          clientIdHasLeadingWhitespace: /^\s/.test(googleSettings?.clientId || ""),
-          clientIdHasTrailingWhitespace: /\s$/.test(googleSettings?.clientId || ""),
+          storedClientIdTrimmedLength: (googleSettings?.clientId || "").trim()
+            .length,
+          clientIdHasLeadingWhitespace: /^\s/.test(
+            googleSettings?.clientId || "",
+          ),
+          clientIdHasTrailingWhitespace: /\s$/.test(
+            googleSettings?.clientId || "",
+          ),
           clientIdFirstChars: (googleSettings?.clientId || "").substring(0, 30),
           clientIdLastChars: (googleSettings?.clientId || "").slice(-30),
-          isValidGoogleClientId: /^\d+(-[\w.]+)\.apps\.googleusercontent\.com$/.test(
-            (googleSettings?.clientId || "").trim()
-          ),
+          isValidGoogleClientId:
+            /^\d+(-[\w.]+)\.apps\.googleusercontent\.com$/.test(
+              (googleSettings?.clientId || "").trim(),
+            ),
           hasClientSecret: !!googleSettings?.clientSecret,
           storedClientSecretLength: (googleSettings?.clientSecret || "").length,
         },
@@ -145,7 +151,7 @@ export const initiateGoogleOAuth = async (
     // Try database credentials first, but validate and sanitize the format
     // Remove any http:// or https:// prefix if present (common mistake)
     let dbClientId = (googleSettings?.clientId || "").trim();
-    
+
     if (dbClientId.startsWith("http://")) {
       logger.warn("Google OAuth Client ID had http:// prefix - auto-removing");
       dbClientId = dbClientId.substring(7);
@@ -153,14 +159,16 @@ export const initiateGoogleOAuth = async (
       logger.warn("Google OAuth Client ID had https:// prefix - auto-removing");
       dbClientId = dbClientId.substring(8);
     }
-    
+
     const dbClientSecret = (googleSettings?.clientSecret || "").trim();
     const isValidClientId = isValidGoogleClientId(dbClientId);
-    
+
     // Only use DB credentials if they're valid and non-empty
     const useDbCredentials = isValidClientId && dbClientSecret;
     const clientId = useDbCredentials ? dbClientId : ENV.GOOGLE_OAUTH_CLIENT_ID;
-    const clientSecret = useDbCredentials ? dbClientSecret : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
+    const clientSecret = useDbCredentials
+      ? dbClientSecret
+      : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
 
     // Check if we have valid credentials from either source
     if (!clientId || !clientSecret) {
@@ -190,7 +198,7 @@ export const initiateGoogleOAuth = async (
     authUrl.searchParams.append("response_type", "code");
     authUrl.searchParams.append("scope", "openid email profile");
     authUrl.searchParams.append("state", state);
-    
+
     res.redirect(authUrl.toString());
   } catch (error: any) {
     logger.error("❌ OAuth initiation error:", error);
@@ -257,17 +265,23 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
     } else if (dbClientId.startsWith("https://")) {
       dbClientId = dbClientId.substring(8); // Remove "https://"
     }
-    
+
     const dbClientSecret = (googleSettings?.clientSecret || "").trim();
-    
+
     // Only use DB credentials if they're valid and non-empty
-    const useDbCredentials = isValidGoogleClientId(dbClientId) && dbClientSecret;
+    const useDbCredentials =
+      isValidGoogleClientId(dbClientId) && dbClientSecret;
     const clientId = useDbCredentials ? dbClientId : ENV.GOOGLE_OAUTH_CLIENT_ID;
-    const clientSecret = useDbCredentials ? dbClientSecret : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
+    const clientSecret = useDbCredentials
+      ? dbClientSecret
+      : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
 
     // Check if we have valid credentials from either source
     if (!clientId || !clientSecret) {
-      logger.error("Google OAuth credentials not configured for organization:", organizationId);
+      logger.error(
+        "Google OAuth credentials not configured for organization:",
+        organizationId,
+      );
       const errorRedirect = baseRedirectUrl
         ? `${baseRedirectUrl}/oauth-callback?error=oauth_not_configured&company=${organizationId}`
         : `/oauth-callback?error=oauth_not_configured&company=${organizationId}`;
@@ -342,13 +356,6 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
         : `/oauth-callback?error=invalid_user_data&company=${organizationId}`;
       return res.redirect(errorRedirect);
     }
-
-    const tokenPayload = {
-      userId: user._id,
-      email: userProfile.email,
-      organizationId: company._id.toString(),
-      role: user.role,
-    };
 
     // Use organization's JWT settings for token generation
     const token = AuthService.generateOrgToken(user, company);
@@ -427,7 +434,10 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
     logger.info("🔄 Redirecting to OAuth callback:", oauthCallbackUrl);
     res.redirect(oauthCallbackUrl);
   } catch (error: any) {
-    logger.error("OAuth callback error:", error.response?.data || error.message);
+    logger.error(
+      "OAuth callback error:",
+      error.response?.data || error.message,
+    );
 
     // Try to get origin from state for error redirect
     let origin = "";
@@ -486,7 +496,7 @@ export const exchangeOAuthCode = async (
 
     // Check if Google OAuth is configured (either in database or environment)
     const googleSettings = company.oauthSettings?.google;
-    
+
     // Try database credentials first, but validate and sanitize the format
     // Remove any http:// or https:// prefix if present (common mistake)
     let dbClientId = (googleSettings?.clientId || "").trim();
@@ -495,13 +505,16 @@ export const exchangeOAuthCode = async (
     } else if (dbClientId.startsWith("https://")) {
       dbClientId = dbClientId.substring(8); // Remove "https://"
     }
-    
+
     const dbClientSecret = (googleSettings?.clientSecret || "").trim();
-    
+
     // Only use DB credentials if they're valid and non-empty
-    const useDbCredentials = isValidGoogleClientId(dbClientId) && dbClientSecret;
+    const useDbCredentials =
+      isValidGoogleClientId(dbClientId) && dbClientSecret;
     const clientId = useDbCredentials ? dbClientId : ENV.GOOGLE_OAUTH_CLIENT_ID;
-    const clientSecret = useDbCredentials ? dbClientSecret : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
+    const clientSecret = useDbCredentials
+      ? dbClientSecret
+      : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
 
     if (!clientId || !clientSecret) {
       badRequestResponse(

@@ -168,7 +168,7 @@ export const useLoginLogic = (orgDetails: Organization | null) => {
 
         const currentOrigin = window.location.origin;
         const backendOAuthUrl = `${API_BASE_URL}/auth/${provider}?organizationId=${encodeURIComponent(organizationId)}&origin=${encodeURIComponent(currentOrigin)}&provider=${provider}`;
-        
+
         window.location.href = backendOAuthUrl;
       } catch (error) {
         clientLogger.error(`${provider} login error:`, error);
