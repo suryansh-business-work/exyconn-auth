@@ -4,6 +4,85 @@ import * as AuthService from "../auth.service";
 import User from "../auth.model";
 import { badRequestResponse, errorResponse, logger } from "../../common";
 import { computeRedirectionUrl } from "./base";
+import { ENV } from "../../config/env";
+
+/**
+ * Validate Google Client ID format
+ * Valid format: 123456789-abc123.apps.googleusercontent.com
+ * Invalid format: http://123456789-abc123.apps.googleusercontent.com
+ */
+const isValidGoogleClientId = (clientId: string): boolean => {
+  if (!clientId) return false;
+  // Client ID must NOT have http:// or https:// prefix
+  if (clientId.startsWith("http://") || clientId.startsWith("https://")) {
+    return false;
+  }
+  // Client ID must match Google's format
+  return /^\d+(-[\w.]+)?\.apps\.googleusercontent\.com$/.test(clientId);
+};
+
+/**
+ * Diagnostic endpoint to check what OAuth credentials are stored
+ * Helps debug "Error 401: invalid_client"
+ */
+export const getOAuthDiagnostics = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const organizationId = (req as any).organizationId;
+
+    if (!organizationId) {
+      badRequestResponse(res, "Organization ID is required");
+      return;
+    }
+
+    const company = await AuthService.getCompanyById(organizationId as string);
+    if (!company) {
+      errorResponse(res, undefined, "Organization not found");
+      return;
+    }
+
+    const googleSettings = company.oauthSettings?.google;
+
+    res.json({
+      status: "success",
+      data: {
+        organizationId,
+        organizationName: company.orgName,
+        googleOAuthPresent: !!googleSettings,
+        googleOAuthEnabled: googleSettings?.enabled,
+        diagnostics: {
+          storedClientId: googleSettings?.clientId,
+          storedClientIdLength: (googleSettings?.clientId || "").length,
+          storedClientIdTrimmed: (googleSettings?.clientId || "").trim(),
+          storedClientIdTrimmedLength: (googleSettings?.clientId || "").trim()
+            .length,
+          clientIdHasLeadingWhitespace: /^\s/.test(
+            googleSettings?.clientId || "",
+          ),
+          clientIdHasTrailingWhitespace: /\s$/.test(
+            googleSettings?.clientId || "",
+          ),
+          clientIdFirstChars: (googleSettings?.clientId || "").substring(0, 30),
+          clientIdLastChars: (googleSettings?.clientId || "").slice(-30),
+          isValidGoogleClientId:
+            /^\d+(-[\w.]+)\.apps\.googleusercontent\.com$/.test(
+              (googleSettings?.clientId || "").trim(),
+            ),
+          hasClientSecret: !!googleSettings?.clientSecret,
+          storedClientSecretLength: (googleSettings?.clientSecret || "").length,
+        },
+        instructions:
+          "Compare the 'storedClientId' with your Google Cloud Console OAuth 2.0 Client ID. " +
+          "It must match EXACTLY. The client type must be 'Web application', not 'Desktop' or 'iOS'. " +
+          "If they don't match, go to the Organization settings and update the OAuth credentials.",
+      },
+    });
+  } catch (error: any) {
+    errorResponse(res, error, error.message);
+  }
+};
 
 export const getOAuthConfig = async (
   req: Request,
@@ -39,7 +118,7 @@ export const getOAuthConfig = async (
     res.json({
       status: "success",
       data: {
-        clientId: company.oauthSettings.google.clientId,
+        clientId: (company.oauthSettings.google.clientId || "").trim(),
         enabled: company.oauthSettings.google.enabled,
       },
     });
@@ -67,19 +146,38 @@ export const initiateGoogleOAuth = async (
       return;
     }
 
-    if (
-      !company.oauthSettings?.google?.enabled ||
-      !company.oauthSettings?.google?.clientId
-    ) {
+    const googleSettings = company.oauthSettings?.google;
+
+    // Try database credentials first, but validate and sanitize the format
+    // Remove any http:// or https:// prefix if present (common mistake)
+    let dbClientId = (googleSettings?.clientId || "").trim();
+
+    if (dbClientId.startsWith("http://")) {
+      logger.warn("Google OAuth Client ID had http:// prefix - auto-removing");
+      dbClientId = dbClientId.substring(7);
+    } else if (dbClientId.startsWith("https://")) {
+      logger.warn("Google OAuth Client ID had https:// prefix - auto-removing");
+      dbClientId = dbClientId.substring(8);
+    }
+
+    const dbClientSecret = (googleSettings?.clientSecret || "").trim();
+    const isValidClientId = isValidGoogleClientId(dbClientId);
+
+    // Only use DB credentials if they're valid and non-empty
+    const useDbCredentials = isValidClientId && dbClientSecret;
+    const clientId = useDbCredentials ? dbClientId : ENV.GOOGLE_OAUTH_CLIENT_ID;
+    const clientSecret = useDbCredentials
+      ? dbClientSecret
+      : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
+
+    // Check if we have valid credentials from either source
+    if (!clientId || !clientSecret) {
       badRequestResponse(
         res,
         "Google OAuth is not configured for this organization",
       );
       return;
     }
-
-    const googleSettings = company.oauthSettings.google;
-    // Store origin and testMode in state for callback handling
     const roleParam = (role as string) || "user";
     const state = JSON.stringify({
       organizationId,
@@ -93,22 +191,14 @@ export const initiateGoogleOAuth = async (
     // The callback will then redirect to the appropriate origin
     const callbackUrl = `${process.env.API_BASE_URL || "https://exyconn-auth-server.exyconn.com"}/v1/api/auth/google/callback`;
 
-    logger.info("🔵 Initiating Google OAuth:", {
-      organizationId,
-      origin,
-      clientId: googleSettings.clientId,
-      callbackUrl,
-    });
-
     // Build Google OAuth URL with organization-specific credentials
     const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
-    authUrl.searchParams.append("client_id", googleSettings.clientId);
+    authUrl.searchParams.append("client_id", clientId);
     authUrl.searchParams.append("redirect_uri", callbackUrl);
     authUrl.searchParams.append("response_type", "code");
     authUrl.searchParams.append("scope", "openid email profile");
     authUrl.searchParams.append("state", state);
 
-    logger.info("🌐 Redirecting to Google:", authUrl.toString());
     res.redirect(authUrl.toString());
   } catch (error: any) {
     logger.error("❌ OAuth initiation error:", error);
@@ -119,12 +209,6 @@ export const initiateGoogleOAuth = async (
 export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
   try {
     const { code, state, error } = req.query;
-
-    logger.info("🔄 Google OAuth callback received:", {
-      code: code ? "***" : null,
-      error,
-      state,
-    });
 
     // Parse state early to get origin for error redirects
     let organizationId = "default";
@@ -138,21 +222,15 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
       testMode = parsed.testMode || false;
       stateRole = parsed.role || "user";
     } catch (e) {
-      logger.error("Failed to parse state:", e);
+      logger.error("Failed to parse OAuth state:", e);
     }
 
     // Use origin from state as base redirect URL - NO hardcoded localhost fallback
     // If origin is empty, we'll handle relative redirects
     const baseRedirectUrl = origin;
 
-    logger.info("📍 OAuth callback - origin and base redirect:", {
-      origin,
-      baseRedirectUrl,
-      isProduction: !origin.includes("localhost"),
-    });
-
     if (error) {
-      logger.error("❌ OAuth error from Google:", error);
+      logger.error("OAuth error from Google:", error);
       const errorRedirect = baseRedirectUrl
         ? `${baseRedirectUrl}/oauth-callback?error=${error}&company=${organizationId}`
         : `/oauth-callback?error=${error}&company=${organizationId}`;
@@ -160,53 +238,65 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
     }
 
     if (!code || !state) {
-      logger.error("❌ Missing code or state");
+      logger.error("Missing code or state in OAuth callback");
       const errorRedirect = baseRedirectUrl
         ? `${baseRedirectUrl}/oauth-callback?error=missing_params&company=${organizationId}`
         : `/oauth-callback?error=missing_params&company=${organizationId}`;
       return res.redirect(errorRedirect);
     }
 
-    logger.info("🔐 OAuth state parsed:", { organizationId, origin });
-
     // Get organization and its Google OAuth settings
     const company = await AuthService.getCompanyById(organizationId);
     if (!company) {
-      logger.error("❌ Organization not found:", organizationId);
+      logger.error("Organization not found:", organizationId);
       const errorRedirect = baseRedirectUrl
         ? `${baseRedirectUrl}/oauth-callback?error=invalid_organization&company=${organizationId}`
         : `/oauth-callback?error=invalid_organization&company=${organizationId}`;
       return res.redirect(errorRedirect);
     }
 
-    if (
-      !company.oauthSettings?.google?.enabled ||
-      !company.oauthSettings?.google?.clientId
-    ) {
-      logger.error("❌ Google OAuth not configured for org:", organizationId);
+    const googleSettings = company.oauthSettings?.google;
+
+    // Try database credentials first, but validate and sanitize the format
+    // Remove any http:// or https:// prefix if present (common mistake)
+    let dbClientId = (googleSettings?.clientId || "").trim();
+    if (dbClientId.startsWith("http://")) {
+      dbClientId = dbClientId.substring(7); // Remove "http://"
+    } else if (dbClientId.startsWith("https://")) {
+      dbClientId = dbClientId.substring(8); // Remove "https://"
+    }
+
+    const dbClientSecret = (googleSettings?.clientSecret || "").trim();
+
+    // Only use DB credentials if they're valid and non-empty
+    const useDbCredentials =
+      isValidGoogleClientId(dbClientId) && dbClientSecret;
+    const clientId = useDbCredentials ? dbClientId : ENV.GOOGLE_OAUTH_CLIENT_ID;
+    const clientSecret = useDbCredentials
+      ? dbClientSecret
+      : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
+
+    // Check if we have valid credentials from either source
+    if (!clientId || !clientSecret) {
+      logger.error(
+        "Google OAuth credentials not configured for organization:",
+        organizationId,
+      );
       const errorRedirect = baseRedirectUrl
         ? `${baseRedirectUrl}/oauth-callback?error=oauth_not_configured&company=${organizationId}`
         : `/oauth-callback?error=oauth_not_configured&company=${organizationId}`;
       return res.redirect(errorRedirect);
     }
 
-    const googleSettings = company.oauthSettings.google;
-
     // Use server's callback URL (must match what was set in initiation)
     const callbackUrl = `${process.env.API_BASE_URL || "https://exyconn-auth-server.exyconn.com"}/v1/api/auth/google/callback`;
-
-    logger.info("🔐 Exchanging auth code for token:", {
-      organizationId,
-      clientId: googleSettings.clientId,
-      callbackUrl,
-    });
 
     // Exchange code for token using organization's credentials
     const tokenResponse = await axios.post(
       "https://oauth2.googleapis.com/token",
       {
-        client_id: googleSettings.clientId,
-        client_secret: googleSettings.clientSecret,
+        client_id: clientId,
+        client_secret: clientSecret,
         code,
         redirect_uri: callbackUrl,
         grant_type: "authorization_code",
@@ -224,7 +314,6 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
     );
 
     const userProfile = profileResponse.data;
-    logger.info("✅ Google profile received:", { email: userProfile.email });
 
     // Check if user exists in this organization
     let user = await AuthService.findUserByEmailAndCompany(
@@ -250,10 +339,6 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
         user.companyId &&
         user.companyId.toString() !== company._id.toString()
       ) {
-        logger.info("❌ User does not belong to this organization:", {
-          userOrg: user.companyId,
-          requestedOrg: company._id,
-        });
         const errorRedirect = baseRedirectUrl
           ? `${baseRedirectUrl}/oauth-callback?error=user_not_in_organization&company=${organizationId}`
           : `/oauth-callback?error=user_not_in_organization&company=${organizationId}`;
@@ -271,15 +356,6 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
         : `/oauth-callback?error=invalid_user_data&company=${organizationId}`;
       return res.redirect(errorRedirect);
     }
-
-    const tokenPayload = {
-      userId: user._id,
-      email: userProfile.email,
-      organizationId: company._id.toString(),
-      role: user.role,
-    };
-
-    logger.info("🔐 Token payload:", tokenPayload);
 
     // Use organization's JWT settings for token generation
     const token = AuthService.generateOrgToken(user, company);
@@ -359,7 +435,7 @@ export const handleOrgGoogleCallback = async (req: Request, res: Response) => {
     res.redirect(oauthCallbackUrl);
   } catch (error: any) {
     logger.error(
-      "❌ OAuth callback error:",
+      "OAuth callback error:",
       error.response?.data || error.message,
     );
 
@@ -418,13 +494,29 @@ export const exchangeOAuthCode = async (
       return;
     }
 
-    // Check if Google OAuth is enabled and configured
+    // Check if Google OAuth is configured (either in database or environment)
     const googleSettings = company.oauthSettings?.google;
-    if (
-      !googleSettings?.enabled ||
-      !googleSettings?.clientId ||
-      !googleSettings?.clientSecret
-    ) {
+
+    // Try database credentials first, but validate and sanitize the format
+    // Remove any http:// or https:// prefix if present (common mistake)
+    let dbClientId = (googleSettings?.clientId || "").trim();
+    if (dbClientId.startsWith("http://")) {
+      dbClientId = dbClientId.substring(7); // Remove "http://"
+    } else if (dbClientId.startsWith("https://")) {
+      dbClientId = dbClientId.substring(8); // Remove "https://"
+    }
+
+    const dbClientSecret = (googleSettings?.clientSecret || "").trim();
+
+    // Only use DB credentials if they're valid and non-empty
+    const useDbCredentials =
+      isValidGoogleClientId(dbClientId) && dbClientSecret;
+    const clientId = useDbCredentials ? dbClientId : ENV.GOOGLE_OAUTH_CLIENT_ID;
+    const clientSecret = useDbCredentials
+      ? dbClientSecret
+      : ENV.GOOGLE_OAUTH_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
       badRequestResponse(
         res,
         "Google OAuth is not configured for this organization",
@@ -509,6 +601,11 @@ export const exchangeOAuthCode = async (
 
     logger.info("🔐 Exchanging auth code for token:", {
       organizationId,
+      clientId,
+      clientIdPrefix: clientId.substring(0, 20),
+      isValidFormat: isValidGoogleClientId(clientId),
+      usingEnvVar: !useDbCredentials,
+      dbClientIdWasInvalid: dbClientId && !isValidGoogleClientId(dbClientId),
       redirectUri,
     });
 
@@ -517,8 +614,8 @@ export const exchangeOAuthCode = async (
       "https://oauth2.googleapis.com/token",
       {
         code,
-        client_id: googleSettings.clientId,
-        client_secret: googleSettings.clientSecret,
+        client_id: clientId,
+        client_secret: clientSecret,
         redirect_uri: redirectUri,
         grant_type: "authorization_code",
       },
