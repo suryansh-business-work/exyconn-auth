@@ -35,6 +35,10 @@ export const ENV = {
   RATE_LIMIT_MAX_REQUESTS: parseInt(
     process.env.RATE_LIMIT_MAX_REQUESTS || "100",
   ),
+
+  // Google OAuth (for testing/fallback only)
+  GOOGLE_OAUTH_CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID || "",
+  GOOGLE_OAUTH_CLIENT_SECRET: process.env.GOOGLE_OAUTH_CLIENT_SECRET || "",
 } as const;
 
 export type ServerEnv = typeof ENV;

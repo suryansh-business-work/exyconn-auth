@@ -119,6 +119,13 @@ router.post(
 // OAuth configuration endpoint (API key required)
 router.get("/oauth-config", authenticateApiKey, AuthController.getOAuthConfig);
 
+// OAuth diagnostics endpoint - helps debug "Error 401: invalid_client" (API key required)
+router.get(
+  "/oauth-diagnostics",
+  authenticateApiKey,
+  AuthController.getOAuthDiagnostics,
+);
+
 // Organization-specific Google OAuth routes (API key from state/query)
 router.get("/google", AuthController.initiateGoogleOAuth);
 router.get("/google/callback", AuthController.handleOrgGoogleCallback);

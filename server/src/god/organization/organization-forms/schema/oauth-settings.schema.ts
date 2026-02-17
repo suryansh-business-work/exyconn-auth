@@ -4,8 +4,8 @@ import { Schema } from "mongoose";
 export const OAuthProviderSchema = new Schema(
   {
     enabled: { type: Boolean, default: false },
-    clientId: { type: String },
-    clientSecret: { type: String },
+    clientId: { type: String, trim: true },
+    clientSecret: { type: String, trim: true },
     // Callback URL is generated automatically by the backend
   },
   { _id: false },
