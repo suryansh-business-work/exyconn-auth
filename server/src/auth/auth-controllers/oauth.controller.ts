@@ -164,9 +164,6 @@ export const initiateGoogleOAuth = async (
 
     // Check if we have valid credentials from either source
     if (!clientId || !clientSecret) {
-        checkedDatabase: useDbCredentials,
-        checkedEnvVars: !useDbCredentials,
-      });
       badRequestResponse(
         res,
         "Google OAuth is not configured for this organization",
