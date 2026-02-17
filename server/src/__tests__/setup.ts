@@ -8,7 +8,7 @@ import { TEST_CONFIG } from "./config";
 // Global test setup
 beforeAll(async () => {
   console.log("🧪 Starting API Tests...");
-  
+
   // Check if server is running
   try {
     await axios.get(`${TEST_CONFIG.API_BASE_URL}/health`, {
