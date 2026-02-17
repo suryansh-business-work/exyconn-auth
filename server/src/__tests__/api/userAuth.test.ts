@@ -24,9 +24,7 @@ describe("User Auth API - API Key Tests", () => {
   // Skip all tests in this suite if server is not available
   beforeAll(() => {
     if (!isServerAvailable) {
-      console.log(
-        "⏭️  Skipping integration tests - server not available",
-      );
+      console.log("⏭️  Skipping integration tests - server not available");
     }
   });
   beforeAll(() => {
@@ -39,9 +37,7 @@ describe("User Auth API - API Key Tests", () => {
   });
 
   describe(`GET ${USER_AUTH_ENDPOINTS.APIKEY_BY_DOMAIN}`, () => {
-    testIt(
-      "should handle domain lookup (success or not found)",
-      async () => {
+    testIt("should handle domain lookup (success or not found)", async () => {
       testClient.clearAuth();
       try {
         const response = await testClient.get(
@@ -69,8 +65,7 @@ describe("User Auth API - API Key Tests", () => {
           handleTestError(error, "domain lookup");
         }
       }
-      },
-    );
+    });
 
     testIt("should handle missing domain gracefully", async () => {
       testClient.clearAuth();
@@ -91,30 +86,29 @@ describe("User Auth API - API Key Tests", () => {
           handleTestError(error, "missing domain handling");
         }
       }
-      },
-    );
+    });
   });
 
   describe(`GET ${USER_AUTH_ENDPOINTS.APIKEY_TO_ORG}`, () => {
     testIt(
       "should return organization details for a valid API key",
       async () => {
-      testClient.setApiKey(TEST_CONFIG.TEST_API_KEY);
-      try {
-        const response = await testClient.get(
-          USER_AUTH_ENDPOINTS.APIKEY_TO_ORG,
-        );
-        expect(response.status).toBe(200);
-        expect(response.data.data).toHaveProperty("organization");
-      } catch (error: any) {
-        // If test key is invalid, 401 is expected
-        // If key is valid but some other issue, might be 404
-        if (error.response) {
-          expect([401, 200]).toContain(error.response.status);
-        } else {
-          handleTestError(error, "API key validation");
+        testClient.setApiKey(TEST_CONFIG.TEST_API_KEY);
+        try {
+          const response = await testClient.get(
+            USER_AUTH_ENDPOINTS.APIKEY_TO_ORG,
+          );
+          expect(response.status).toBe(200);
+          expect(response.data.data).toHaveProperty("organization");
+        } catch (error: any) {
+          // If test key is invalid, 401 is expected
+          // If key is valid but some other issue, might be 404
+          if (error.response) {
+            expect([401, 200]).toContain(error.response.status);
+          } else {
+            handleTestError(error, "API key validation");
+          }
         }
-      }
       },
     );
 
@@ -130,7 +124,6 @@ describe("User Auth API - API Key Tests", () => {
           handleTestError(error, "missing API key check");
         }
       }
-      },
-    );
+    });
   });
 });
