@@ -3,6 +3,20 @@ import testClient from "../utils/testClient";
 import { USER_AUTH_ENDPOINTS } from "./endpoints/userAuth.apis";
 import { TEST_CONFIG } from "../config";
 
+/**
+ * Helper to provide better error messages when server is not running
+ */
+const handleTestError = (error: any, testName: string): never => {
+  if (!error.response) {
+    throw new Error(
+      `${testName} failed: Cannot connect to server at ${TEST_CONFIG.API_BASE_URL}. ` +
+        `Make sure the server is running with: npm run dev:server\n` +
+        `Original error: ${error.message}`,
+    );
+  }
+  throw error;
+};
+
 describe("User Auth API - API Key Tests", () => {
   beforeAll(() => {
     // Ensure we start with a clean state or set a default key if needed
@@ -36,7 +50,11 @@ describe("User Auth API - API Key Tests", () => {
       } catch (error: any) {
         // If it throws, check if it's a valid 400/404, though debug showed 200
         console.error("API Key Lookup Error:", error.message);
-        expect([400, 404, 200]).toContain(error.response?.status);
+        if (error.response) {
+          expect([400, 404, 200]).toContain(error.response.status);
+        } else {
+          handleTestError(error, "domain lookup");
+        }
       }
     });
 
@@ -53,7 +71,11 @@ describe("User Auth API - API Key Tests", () => {
           expect(response.data.data).toHaveProperty("matched");
         }
       } catch (error: any) {
-        expect([400, 404]).toContain(error.response?.status);
+        if (error.response) {
+          expect([400, 404]).toContain(error.response.status);
+        } else {
+          handleTestError(error, "missing domain handling");
+        }
       }
     });
   });
@@ -70,7 +92,11 @@ describe("User Auth API - API Key Tests", () => {
       } catch (error: any) {
         // If test key is invalid, 401 is expected
         // If key is valid but some other issue, might be 404
-        expect([401, 200]).toContain(error.response?.status);
+        if (error.response) {
+          expect([401, 200]).toContain(error.response.status);
+        } else {
+          handleTestError(error, "API key validation");
+        }
       }
     });
 
@@ -80,7 +106,11 @@ describe("User Auth API - API Key Tests", () => {
         await testClient.get(USER_AUTH_ENDPOINTS.APIKEY_TO_ORG);
         throw new Error("Should have thrown");
       } catch (error: any) {
-        expect(error.response?.status).toBe(401);
+        if (error.response) {
+          expect(error.response.status).toBe(401);
+        } else {
+          handleTestError(error, "missing API key check");
+        }
       }
     });
   });
